@@ -1,1 +1,26 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Support | PokeWorld</title><link rel="stylesheet" href="style.css?v=20261023-1"></head><body><a class="hidden" href="#main">Skip to content</a><header><a class="brand" href="index.html">PokeWorld</a><nav aria-label="Main navigation"><a href="index.html">Home</a><a href="how-to-play.html">How to play</a><a href="features.html">Features</a><a href="updates.html">Updates</a><a href="support.html" aria-current="page">Support</a></nav></header><main id="main"><div class="formlayout"><section><h1>Make it a better world.</h1><p class="lead">Found a bug? Have an idea? Send a request.</p><p>For bugs, tell us where you were, what happened, and what you expected. Don't include passwords or personal information.</p><p class="small">Requests go to the game's request list. Sending one doesn't guarantee a change or a response time.</p></section><section><form id="request-form"><label for="name">Your name</label><input id="name" name="name" maxlength="40" required autocomplete="name"><label for="request">Request or bug</label><textarea id="request" name="request" minlength="10" maxlength="1000" required aria-describedby="request-count"></textarea><div class="hint" id="request-count">0 / 1,000 characters</div><label for="where">Where in the game? <span class="hint">Optional</span></label><input id="where" name="where" maxlength="100"><div class="hidden" aria-hidden="true"><label>Leave blank<input name="website" tabindex="-1" autocomplete="off"></label></div><p id="form-status" class="notice" role="status">Ready when you are.</p><button type="submit">Send request</button></form></section></div></main><footer><span>PokeWorld. A world to explore together.</span><a href="support.html">A question, an idea, a bug? Tell us.</a></footer><script src="config.js?v=20261023-1"></script><script src="site.js?v=20261023-1"></script></body></html>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Support — PokeWorld</title><meta name="description" content="Found a bug? Have an idea? Send a request."><meta name="theme-color" content="#0b100c"><meta property="og:title" content="Support — PokeWorld"><meta property="og:description" content="Found a bug? Have an idea? Send a request."><meta property="og:image" content="https://ddhkim-gop.github.io/pokeworld-site/assets/world-hero.jpg"><meta property="og:type" content="website"><link rel="stylesheet" href="signal.css"></head><body>
+<header class="top"><div class="brand">Poke<b>World</b></div>
+<nav class="nav"><a href="index.html">Home</a><a href="how-to-play.html">How to play</a><a href="features.html">Features</a><a href="updates.html">Updates</a><a href="support.html" class="on">Support</a></nav></header>
+<section class="page-head"><div class="wrap">
+<span class="kick">Support</span>
+<h1>Make it a better world.</h1>
+<p class="sub">Found a bug? Have an idea? Send a request.</p>
+</div></section>
+
+<section class="sform"><div class="wrap">
+<p style="color:var(--soft);max-width:40em">For bugs, tell us where you were, what happened, and what you expected. Don't include passwords or personal information.</p>
+<p style="color:var(--dim);max-width:40em;margin-top:12px">Requests go to the game's request list. Sending one doesn't guarantee a change or a response time.</p>
+<div class="panel"><form id="request-form">
+<label for="name">Your name</label>
+<input id="name" name="name" type="text" maxlength="40" required autocomplete="name">
+<label for="request">Request or bug</label>
+<textarea id="request" name="request" minlength="10" maxlength="1000" required aria-describedby="request-count"></textarea>
+<div class="count" id="request-count">0 / 1,000 characters</div>
+<label for="where">Where in the game? <span style="color:var(--dim)">Optional</span></label>
+<input id="where" name="where" type="text">
+<input class="hp-honey" type="text" name="website" tabindex="-1" autocomplete="off" placeholder="Leave blank">
+<div class="status" id="form-status" role="status">Ready when you are.</div>
+<div style="margin-top:24px"><button class="btn p" type="submit">Send request</button></div>
+</form></div>
+</div></section>
+<footer><span>PokeWorld — a world to explore together.</span><span>A question, an idea, a bug? Tell us.</span></footer><script src="config.js"></script><script src="site.js"></script></body></html>

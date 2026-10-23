@@ -1,1 +1,165 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Explore together | PokeWorld</title><link rel="stylesheet" href="style.css?v=20261023-1"></head><body><a class="hidden" href="#main">Skip to content</a><header><a class="brand" href="index.html">PokeWorld</a><nav aria-label="Main navigation"><a href="index.html" aria-current="page">Home</a><a href="how-to-play.html">How to play</a><a href="features.html">Features</a><a href="updates.html">Updates</a><a href="support.html">Support</a></nav></header><section class="hero" id="main"><div class="copy"><h1>Your next adventure<br>is waiting.</h1><p>Explore towns, meet wild Pokémon, and make your own way with friends.</p><a class="button" href="how-to-play.html">Start your adventure</a><a class="button secondary" href="features.html">Explore the world</a></div></section><main><section class="intro"><div><h2>A familiar world.<br>A different way to play.</h2><p>Take the trail into the forest. Wander through town. Find a new companion, then head out together.</p><p>PokeWorld brings Pokémon into a 3D world with real-time battles and multiplayer.</p></div><img src="assets/world-detail.jpg" alt="A stone path through PokeWorld's green town" loading="lazy"></section><section class="features"><article><h3>Find your team</h3><p>Meet wild Pokémon, catch companions, and build a party of six.</p></article><article><h3>Play in real time</h3><p>Move, dodge, and choose your moves as the battle unfolds.</p></article><article><h3>Bring your friends</h3><p>Explore the same world, trade Pokémon, and keep your progress with your account.</p></article></section><section class="sectioncta"><h2>Help shape the next adventure.</h2><a class="button" href="support.html">Send a request</a></section></main><footer><span>PokeWorld. A world to explore together.</span><a href="support.html">A question, an idea, a bug? Tell us.</a></footer><script src="config.js?v=20261023-1"></script><script src="site.js?v=20261023-1"></script></body></html>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PokeWorld — a world to explore together</title><meta name="description" content="Step into the world of pokemon. Explore Kanto and Johto, earn 16 badges, and grow a team of six in a live multiplayer world."><meta name="theme-color" content="#0b100c"><meta property="og:title" content="PokeWorld — a world to explore together"><meta property="og:description" content="Step into the world of pokemon. Explore Kanto and Johto, earn 16 badges, and grow a team of six in a live multiplayer world."><meta property="og:image" content="https://ddhkim-gop.github.io/pokeworld-site/assets/world-hero.jpg"><meta property="og:type" content="website">
+
+<style>
+@font-face{font-family:'Source Sans Pro';src:url('signal-black.woff');font-weight:900}
+@font-face{font-family:'Source Sans Pro';src:url('signal-bold.woff');font-weight:700}
+@font-face{font-family:'Source Sans Pro';src:url('signal-semibold.woff');font-weight:600}
+@font-face{font-family:'Source Sans Pro';src:url('signal-regular.woff');font-weight:400}
+
+:root{--night:#0b100c;--night2:#121a13;--panel:#16211a;--line:#2c3d30;--signal:#e8a33d;--hp:#63c66f;--text:#f2ede0;--soft:#b9c2b2;--dim:#8b968a}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--night);color:var(--text);font:400 17px/1.6 "Source Sans Pro",Arial,sans-serif}
+.wrap{max-width:1200px;margin:0 auto;padding:0 32px}
+.top{position:absolute;top:0;left:0;right:0;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:18px 32px;background:#0b100c;border-bottom:1px solid rgba(44,61,48,.6)}
+.brand{font-weight:900;font-size:20px;letter-spacing:.06em;text-transform:uppercase}
+.brand b{color:var(--signal)}
+.nav a{color:var(--soft);text-decoration:none;font-size:14px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;margin-left:26px}
+.nav a.on{color:var(--text);border-bottom:2px solid var(--signal);padding-bottom:4px}
+/* hero */
+.hero{position:relative;height:56vw;min-height:620px;max-height:780px;display:flex;align-items:flex-end;overflow:hidden}
+.hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.92) brightness(.72)}
+.hero .grad{position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,16,12,.72),rgba(11,16,12,.18) 42%,rgba(11,16,12,.94) 88%)}
+.vidpause{position:absolute;bottom:34px;right:66px;z-index:6;background:rgba(11,16,12,.72);color:var(--text);border:1px solid var(--signal);padding:9px 15px;font:600 12px/1 "Source Sans Pro",Arial,sans-serif;letter-spacing:.12em;text-transform:uppercase;cursor:pointer}
+.hud{position:absolute;border:1px solid rgba(232,163,61,.55);width:26px;height:26px;z-index:4}
+.hud.tl{top:118px;left:26px;border-right:0;border-bottom:0}.hud.tr{top:118px;right:26px;border-left:0;border-bottom:0}
+.hud.bl{bottom:26px;left:26px;border-right:0;border-top:0}.hud.br{bottom:26px;right:26px;border-left:0;border-top:0}
+.hero-in{position:relative;z-index:3;width:100%;padding:0 0 84px}
+.kick{display:inline-block;font-weight:700;font-size:13px;letter-spacing:.28em;text-transform:uppercase;color:var(--signal);border:1px solid rgba(232,163,61,.5);padding:8px 14px;margin-bottom:26px}
+h1{font-weight:900;font-size:clamp(52px,8.4vw,118px);line-height:.95;text-transform:uppercase;letter-spacing:-.015em;max-width:9em}
+@media(min-width:761px){.hero h1{max-width:11em;font-size:clamp(70px,7.2vw,100px)}}
+h1 .o{-webkit-text-stroke:2px var(--text);color:transparent}
+.hp{display:flex;align-items:center;gap:14px;margin:30px 0 36px;max-width:560px}
+.hp .bar{flex:1;height:8px;background:rgba(242,237,224,.14);border:1px solid rgba(242,237,224,.25)}
+.hp .bar i{display:block;height:100%;width:82%;background:linear-gradient(90deg,var(--hp),#9be26a)}
+.hp span{font-size:13px;font-weight:700;letter-spacing:.16em;color:var(--soft);text-transform:uppercase;white-space:nowrap}
+.cta{display:flex;gap:16px;flex-wrap:wrap}
+.btn{font-weight:700;font-size:15px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;padding:16px 30px;border:1px solid var(--signal)}
+.btn.p{background:var(--signal);color:#14100a}.btn.g{color:var(--text)}
+/* stats strip */
+.stats{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--night2)}
+.stats .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+.stat{padding:34px 26px;border-left:1px solid var(--line)}
+.stat:first-child{border-left:0}
+.stat b{display:block;font-weight:900;font-size:44px;line-height:1;color:var(--signal)}
+.stat span{font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+/* mission sections */
+.mission{position:relative;padding:110px 0;border-bottom:1px solid var(--line)}
+.mission .grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center}
+.mission.flip .grid .txt{order:2}
+.mission:not(.flip) .num{left:32px;right:auto}
+.mission .grid{position:relative;z-index:1}
+.num{position:absolute;top:64px;right:32px;z-index:0;font-weight:900;font-size:150px;line-height:1;color:transparent;-webkit-text-stroke:1.5px rgba(232,163,61,.28)}
+.mission h2{font-weight:900;font-size:clamp(34px,4.2vw,56px);line-height:1;text-transform:uppercase;letter-spacing:-.01em;margin:14px 0 22px}
+.tag{font-weight:700;font-size:13px;letter-spacing:.26em;text-transform:uppercase;color:var(--hp)}
+.mission p{color:var(--soft);max-width:30em}
+.mission p+p{margin-top:14px}
+.frame{position:relative;border:1px solid var(--line);background:var(--panel);padding:10px}
+.frame img,.frame video{display:block;width:100%;height:auto}
+.frame .cap{position:absolute;left:22px;bottom:22px;background:rgba(11,16,12,.82);border:1px solid var(--line);padding:8px 14px;font-size:12.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--soft)}
+.tick{position:absolute;width:18px;height:18px;border:2px solid var(--signal)}
+.tick.a{top:-2px;left:-2px;border-right:0;border-bottom:0}.tick.b{top:-2px;right:-2px;border-left:0;border-bottom:0}
+.tick.c{bottom:-2px;left:-2px;border-right:0;border-top:0}.tick.d{bottom:-2px;right:-2px;border-left:0;border-top:0}
+/* skill chips */
+.skills{background:var(--night2);border-bottom:1px solid var(--line);padding:96px 0}
+.skills h2{font-weight:900;font-size:clamp(30px,3.6vw,46px);text-transform:uppercase;margin-bottom:10px}
+.skills .sub{color:var(--dim);margin-bottom:40px;max-width:34em}
+.chips{display:flex;flex-wrap:wrap;gap:12px}
+.chip{border:1px solid var(--line);padding:14px 20px;font-weight:700;font-size:15px;letter-spacing:.08em;text-transform:uppercase;color:var(--soft);background:var(--panel)}
+.chip.hot{border-color:rgba(99,198,111,.55);color:var(--hp)}
+/* join */
+.join{padding:120px 0;background:linear-gradient(180deg,var(--night2),var(--night))}
+.join .card{border:1px solid var(--line);background:var(--panel);padding:56px;display:grid;grid-template-columns:1.1fr .9fr;gap:56px}
+.join h2{font-weight:900;font-size:clamp(34px,4.4vw,58px);line-height:.98;text-transform:uppercase}
+.join h2 b{color:var(--signal)}
+.steps{list-style:none;counter-reset:s}
+.steps li{counter-increment:s;display:flex;gap:18px;padding:16px 0;border-bottom:1px solid var(--line);color:var(--soft)}
+.steps li::before{content:"0" counter(s);font-weight:900;color:var(--signal);font-size:20px;min-width:38px}
+.steps li:last-child{border-bottom:0}
+.note{margin-top:22px;font-size:14px;color:var(--dim);border-left:2px solid var(--signal);padding-left:14px}
+footer{padding:34px 0;border-top:1px solid var(--line);display:flex;justify-content:space-between;color:var(--dim);font-size:14px}
+@media(max-width:760px){
+ .top{flex-wrap:wrap;justify-content:center;row-gap:10px}.nav{display:flex;flex-wrap:wrap;justify-content:center;row-gap:6px}.nav a{margin:0 10px;font-size:11.5px;letter-spacing:.09em}
+ .top{padding:16px 18px}.hero{height:auto;min-height:600px}.hero-in{padding:0 32px 56px}
+ .stats .wrap{grid-template-columns:1fr 1fr}
+ .stat{padding:22px 18px}.stat b{font-size:32px}
+ .mission{padding:72px 0}.mission .grid{grid-template-columns:1fr;gap:32px}
+ .mission.flip .grid .txt{order:0}
+ .num{font-size:84px;top:32px;right:18px}.mission:not(.flip) .num{left:18px;right:auto}
+ .join .card{grid-template-columns:1fr;padding:32px 22px}
+ footer{flex-direction:column;gap:8px;padding:28px 32px}
+}
+@media(max-width:760px){.hero{min-height:660px}.hero-in{padding-top:154px}.hud.tl,.hud.tr{top:148px}}
+.frame .cap{position:static;display:inline-block;margin-top:10px}
+</style></head><body>
+<header class="top"><div class="brand">Poke<b>World</b></div>
+<nav class="nav"><a class="on" href="index.html">Home</a><a href="how-to-play.html">How to play</a><a href="features.html">Features</a><a href="updates.html">Updates</a><a href="support.html">Support</a></nav></header>
+
+<section class="hero">
+<video autoplay muted loop playsinline aria-hidden="true" tabindex="-1" poster="assets/exploration-poster.jpg"><source src="assets/clips/world-walk.mp4" type="video/mp4"></video>
+<div class="grad"></div>
+<button class="vidpause" type="button" aria-label="Pause background video">Pause</button>
+<span class="hud tl"></span><span class="hud tr"></span><span class="hud bl"></span><span class="hud br"></span>
+<div class="hero-in wrap">
+<span class="kick">Live multiplayer world</span>
+<h1>Step <span class="o">into</span> the world of pokemon</h1>
+<div class="hp"><span>Adventure</span><div class="bar"><i></i></div><span>Ready</span></div>
+<div class="cta"><a class="btn p" href="how-to-play.html">Start your adventure</a><a class="btn g" href="#world">Watch the world</a></div>
+</div></section>
+
+<section class="stats"><div class="wrap">
+<div class="stat"><b>16</b><span>Badges to earn</span></div>
+<div class="stat"><b>2</b><span>Regions, Kanto + Johto</span></div>
+<div class="stat"><b>8</b><span>Skills to train to 99</span></div>
+<div class="stat"><b>6</b><span>Pokemon on your team</span></div>
+</div></section>
+
+<section class="mission" id="world"><div class="wrap">
+<span class="num">01</span>
+<div class="grid"><div class="txt">
+<span class="tag">Explore</span>
+<h2>The world is the lobby.</h2>
+<p>Walk out of town and the world keeps going — meadows, forests, water, and other trainers crossing the same ground.</p>
+<p>Bring up the world map and fly back to any town you have visited.</p>
+</div>
+<div class="frame"><span class="tick a"></span><span class="tick b"></span><span class="tick c"></span><span class="tick d"></span>
+<img src="assets/world-hero.jpg" alt="A trainer and Pikachu looking over the water at sunset"><span class="cap">Actual gameplay</span></div>
+</div></div></section>
+
+<section class="mission flip"><div class="wrap">
+<span class="num">02</span>
+<div class="grid"><div class="txt">
+<span class="tag">Battle</span>
+<h2>Fights happen where you stand.</h2>
+<p>Lock on, dodge in real time, pick your moves, and throw a Poke Ball while the battle plays out in the world around you. Gym Leaders put your team of six to the test.</p>
+</div>
+<div class="frame"><span class="tick a"></span><span class="tick b"></span><span class="tick c"></span><span class="tick d"></span>
+<video controls preload="none" playsinline poster="assets/battle-poster.jpg" src="assets/clips/battle.mp4"></video>
+<span class="cap">Gameplay demonstration</span></div>
+</div></div></section>
+
+<section class="skills"><div class="wrap">
+<span class="tag">Train</span>
+<h2>Eight ways to grow.</h2>
+<p class="sub">Every skill levels from 1 to 99 by doing it. Cast a line, swing a pick, cook over a campfire — the world keeps score.</p>
+<div class="chips">
+<span class="chip">Fishing</span><span class="chip">Foraging</span><span class="chip">Mining</span><span class="chip">Agility</span>
+<span class="chip">Crafting</span><span class="chip">Cooking</span><span class="chip hot">Firemaking</span><span class="chip">Woodcutting</span>
+</div></div></section>
+
+<section class="join"><div class="wrap"><div class="card">
+<div><span class="tag">Deploy</span>
+<h2>Squad up.<br><b>Your adventure</b> starts here.</h2>
+<p class="note">This website is separate from the game. Opening this page does not grant game access.</p>
+<div class="cta" style="margin-top:26px"><a class="btn p" href="how-to-play.html">How to join</a></div>
+</div>
+<ol class="steps">
+<li>Install Tailscale and sign in</li>
+<li>Accept the game invite</li>
+<li>Open PokeWorld and pick your trainer name</li>
+<li>Walk out. The world is already running.</li>
+</ol>
+</div></div></section>
+
+<footer><span>PokeWorld — a world to explore together.</span><span>A question, an idea, a bug? Tell us.</span></footer>
+<script>(function(){var v=document.querySelector(".hero video"),b=document.querySelector(".vidpause");if(v&&b){b.addEventListener("click",function(){if(v.paused){v.play();b.textContent="Pause";b.setAttribute("aria-label","Pause background video")}else{v.pause();b.textContent="Play";b.setAttribute("aria-label","Play background video")}})}})();</script></body></html>
