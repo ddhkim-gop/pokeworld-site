@@ -33,3 +33,8 @@ if (form) {
     }
   });
 }
+
+const gameUrl = (window.POKEWORLD_CONFIG || {}).gameUrl;
+if (gameUrl) {
+  document.querySelectorAll('[data-game-url]').forEach(a => { a.href = gameUrl; });
+}
