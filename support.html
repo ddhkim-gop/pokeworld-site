@@ -18,6 +18,9 @@
 <div class="count" id="request-count">0 / 1,000 characters</div>
 <label for="where">Where in the game? <span style="color:var(--dim)">Optional</span></label>
 <input id="where" name="where" type="text">
+<label for="screenshot-paste">Screenshots <span style="color:var(--dim)">Optional</span></label>
+<div id="screenshot-paste" class="paste-box" tabindex="0" role="group" aria-describedby="paste-hint paste-status"><strong>Copy a screenshot. Paste it here.</strong><span id="paste-hint">Click here and press Ctrl+V (Windows) or Command+V (Mac). You can also paste while typing your request. Up to 3 images. No file picker.</span></div>
+<div id="screenshot-previews" class="shot-grid"></div><div id="paste-status" role="status" class="count"></div>
 <input class="hp-honey" type="text" name="website" tabindex="-1" autocomplete="off" placeholder="Leave blank">
 <div class="status" id="form-status" role="status">Ready when you are.</div>
 <div style="margin-top:24px"><button class="btn p" type="submit">Send request</button></div>
