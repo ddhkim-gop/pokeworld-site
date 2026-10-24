@@ -91,6 +91,13 @@ footer{padding:34px 0;border-top:1px solid var(--line);display:flex;justify-cont
 }
 @media(max-width:760px){.hero{min-height:660px}.hero-in{padding-top:154px}.hud.tl,.hud.tr{top:148px}}
 .frame .cap{position:static;display:inline-block;margin-top:10px}
+.video-actions{position:absolute;bottom:34px;right:max(20px,5vw);z-index:6;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;max-width:calc(100% - 40px)}
+.video-actions button{background:rgba(11,16,12,.85);color:var(--text);border:1px solid var(--signal);padding:12px 15px;min-height:44px;font:600 12px/1 Arial,sans-serif;letter-spacing:.08em;text-transform:uppercase;cursor:pointer}
+.video-actions .vidpause{position:static}
+.video-actions button:focus-visible{outline:3px solid var(--signal);outline-offset:3px}
+.video-status{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+@media(max-width:600px){.video-actions{bottom:20px;right:20px}}
+
 </style></head><body>
 <header class="top"><div class="brand">Poke<b>World</b></div>
 <nav class="nav"><a class="on" href="index.html">Home</a><a href="how-to-play.html">How to play</a><a href="features.html">Features</a><a href="updates.html">Updates</a><a href="support.html">Support</a></nav></header>
@@ -98,7 +105,7 @@ footer{padding:34px 0;border-top:1px solid var(--line);display:flex;justify-cont
 <section class="hero">
 <video autoplay muted loop playsinline aria-hidden="true" tabindex="-1" poster="assets/exploration-poster.jpg"><source src="assets/clips/world-walk.mp4" type="video/mp4"></video>
 <div class="grad"></div>
-<button class="vidpause" type="button" aria-label="Pause background video">Pause</button>
+<div class="video-actions"><button class="vidpause" type="button" aria-label="Pause background video">Pause</button><button class="vidsound" type="button" aria-label="Unmute background video" aria-pressed="false">Sound on</button></div><span class="video-status" role="status" aria-live="polite"></span>
 <span class="hud tl"></span><span class="hud tr"></span><span class="hud bl"></span><span class="hud br"></span>
 <div class="hero-in wrap">
 <span class="kick">Live multiplayer world</span>
@@ -162,4 +169,25 @@ footer{padding:34px 0;border-top:1px solid var(--line);display:flex;justify-cont
 </div></div></section>
 
 <footer><span>PokeWorld — a world to explore together.</span><span>A question, an idea, a bug? Tell us.</span></footer>
-<script>(function(){var v=document.querySelector(".hero video"),b=document.querySelector(".vidpause");if(v&&b){b.addEventListener("click",function(){if(v.paused){v.play();b.textContent="Pause";b.setAttribute("aria-label","Pause background video")}else{v.pause();b.textContent="Play";b.setAttribute("aria-label","Play background video")}})}})();</script></body></html>
+<script>
+// Stage with real audio-bearing replacement clips. No autoplay sound.
+const video=document.querySelector('.hero video');
+const pause=document.querySelector('.vidpause');
+const sound=document.querySelector('.vidsound');
+if(video&&pause&&sound){
+ const status=document.querySelector('.video-status');
+ const sync=()=>{
+  pause.textContent=video.paused?'Play':'Pause';pause.setAttribute('aria-label',video.paused?'Play background video':'Pause background video');
+  const audible=!video.muted&&video.volume>0;sound.textContent=audible?'Sound off':'Sound on';sound.setAttribute('aria-pressed',String(audible));sound.setAttribute('aria-label',audible?'Mute background video':'Unmute background video');
+ };
+ const failed=()=>{video.muted=true;if(status)status.textContent='Playback could not start. Try Play again.';sync();};
+ pause.addEventListener('click',async()=>{if(status)status.textContent='';if(video.paused){try{await video.play();}catch{failed();}}else video.pause();sync();});
+ sound.addEventListener('click',async()=>{if(status)status.textContent='';video.muted=!video.muted;if(!video.muted&&video.volume===0)video.volume=1;try{if(!video.muted&&video.paused)await video.play();}catch{failed();}sync();});
+ for(const event of ['play','pause','volumechange','ended'])video.addEventListener(event,sync);
+ // Background and battle sound should not play on top of each other.
+ for(const clip of document.querySelectorAll('video[controls]'))clip.addEventListener('play',()=>{video.muted=true;sync();});
+ video.muted=true;sync();
+}
+
+</script>
+</body></html>
