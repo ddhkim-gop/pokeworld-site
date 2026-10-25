@@ -1,193 +1,172 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>PokeWorld — a world to explore together</title><meta name="description" content="Step into the world of pokemon. Explore Kanto and Johto, earn 16 badges, and grow a team of six in a live multiplayer world."><meta name="theme-color" content="#0b100c"><meta property="og:title" content="PokeWorld — a world to explore together"><meta property="og:description" content="Step into the world of pokemon. Explore Kanto and Johto, earn 16 badges, and grow a team of six in a live multiplayer world."><meta property="og:image" content="https://ddhkim-gop.github.io/pokeworld-site/assets/world-hero.jpg"><meta property="og:type" content="website">
-
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PokeWorld - Battle Screen (full draft)</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Kanit:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-@font-face{font-family:'Source Sans Pro';src:url('signal-black.woff');font-weight:900}
-@font-face{font-family:'Source Sans Pro';src:url('signal-bold.woff');font-weight:700}
-@font-face{font-family:'Source Sans Pro';src:url('signal-semibold.woff');font-weight:600}
-@font-face{font-family:'Source Sans Pro';src:url('signal-regular.woff');font-weight:400}
 
-:root{--night:#0b100c;--night2:#121a13;--panel:#16211a;--line:#2c3d30;--signal:#e8a33d;--hp:#63c66f;--text:#f2ede0;--soft:#b9c2b2;--dim:#8b968a}
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--night);color:var(--text);font:400 17px/1.6 "Source Sans Pro",Arial,sans-serif}
-.wrap{max-width:1200px;margin:0 auto;padding:0 32px}
-.top{position:absolute;top:0;left:0;right:0;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:18px 32px;background:#0b100c;border-bottom:1px solid rgba(44,61,48,.6)}
-.brand{font-weight:900;font-size:20px;letter-spacing:.06em;text-transform:uppercase}
-.brand b{color:var(--signal)}
-.nav a{color:var(--soft);text-decoration:none;font-size:14px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;margin-left:26px}
-.nav a.on{color:var(--text);border-bottom:2px solid var(--signal);padding-bottom:4px}
-/* hero */
-.hero{position:relative;height:56vw;min-height:620px;max-height:780px;display:flex;align-items:flex-end;overflow:hidden}
-.hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.92) brightness(.72)}
-.hero .grad{position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,16,12,.72),rgba(11,16,12,.18) 42%,rgba(11,16,12,.94) 88%)}
-.vidpause{position:absolute;bottom:34px;right:66px;z-index:6;background:rgba(11,16,12,.72);color:var(--text);border:1px solid var(--signal);padding:9px 15px;font:600 12px/1 "Source Sans Pro",Arial,sans-serif;letter-spacing:.12em;text-transform:uppercase;cursor:pointer}
-.hud{position:absolute;border:1px solid rgba(232,163,61,.55);width:26px;height:26px;z-index:4}
-.hud.tl{top:118px;left:26px;border-right:0;border-bottom:0}.hud.tr{top:118px;right:26px;border-left:0;border-bottom:0}
-.hud.bl{bottom:26px;left:26px;border-right:0;border-top:0}.hud.br{bottom:26px;right:26px;border-left:0;border-top:0}
-.hero-in{position:relative;z-index:3;width:100%;padding:0 0 84px}
-.kick{display:inline-block;font-weight:700;font-size:13px;letter-spacing:.28em;text-transform:uppercase;color:var(--signal);border:1px solid rgba(232,163,61,.5);padding:8px 14px;margin-bottom:26px}
-h1{font-weight:900;font-size:clamp(52px,8.4vw,118px);line-height:.95;text-transform:uppercase;letter-spacing:-.015em;max-width:9em}
-@media(min-width:761px){.hero h1{max-width:11em;font-size:clamp(70px,7.2vw,100px)}}
-h1 .o{-webkit-text-stroke:2px var(--text);color:transparent}
-.hp{display:flex;align-items:center;gap:14px;margin:30px 0 36px;max-width:560px}
-.hp .bar{flex:1;height:8px;background:rgba(242,237,224,.14);border:1px solid rgba(242,237,224,.25)}
-.hp .bar i{display:block;height:100%;width:82%;background:linear-gradient(90deg,var(--hp),#9be26a)}
-.hp span{font-size:13px;font-weight:700;letter-spacing:.16em;color:var(--soft);text-transform:uppercase;white-space:nowrap}
-.cta{display:flex;gap:16px;flex-wrap:wrap}
-.btn{font-weight:700;font-size:15px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;padding:16px 30px;border:1px solid var(--signal)}
-.btn.p{background:var(--signal);color:#14100a}.btn.g{color:var(--text)}
-/* stats strip */
-.stats{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--night2)}
-.stats .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
-.stat{padding:34px 26px;border-left:1px solid var(--line)}
-.stat:first-child{border-left:0}
-.stat b{display:block;font-weight:900;font-size:44px;line-height:1;color:var(--signal)}
-.stat span{font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
-/* mission sections */
-.mission{position:relative;padding:110px 0;border-bottom:1px solid var(--line)}
-.mission .grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center}
-.mission.flip .grid .txt{order:2}
-.mission:not(.flip) .num{left:32px;right:auto}
-.mission .grid{position:relative;z-index:1}
-.num{position:absolute;top:64px;right:32px;z-index:0;font-weight:900;font-size:150px;line-height:1;color:transparent;-webkit-text-stroke:1.5px rgba(232,163,61,.28)}
-.mission h2{font-weight:900;font-size:clamp(34px,4.2vw,56px);line-height:1;text-transform:uppercase;letter-spacing:-.01em;margin:14px 0 22px}
-.tag{font-weight:700;font-size:13px;letter-spacing:.26em;text-transform:uppercase;color:var(--hp)}
-.mission p{color:var(--soft);max-width:30em}
-.mission p+p{margin-top:14px}
-.frame{position:relative;border:1px solid var(--line);background:var(--panel);padding:10px}
-.frame img,.frame video{display:block;width:100%;height:auto}
-.frame .cap{position:absolute;left:22px;bottom:22px;background:rgba(11,16,12,.82);border:1px solid var(--line);padding:8px 14px;font-size:12.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--soft)}
-.tick{position:absolute;width:18px;height:18px;border:2px solid var(--signal)}
-.tick.a{top:-2px;left:-2px;border-right:0;border-bottom:0}.tick.b{top:-2px;right:-2px;border-left:0;border-bottom:0}
-.tick.c{bottom:-2px;left:-2px;border-right:0;border-top:0}.tick.d{bottom:-2px;right:-2px;border-left:0;border-top:0}
-/* skill chips */
-.skills{background:var(--night2);border-bottom:1px solid var(--line);padding:96px 0}
-.skills h2{font-weight:900;font-size:clamp(30px,3.6vw,46px);text-transform:uppercase;margin-bottom:10px}
-.skills .sub{color:var(--dim);margin-bottom:40px;max-width:34em}
-.chips{display:flex;flex-wrap:wrap;gap:12px}
-.chip{border:1px solid var(--line);padding:14px 20px;font-weight:700;font-size:15px;letter-spacing:.08em;text-transform:uppercase;color:var(--soft);background:var(--panel)}
-.chip.hot{border-color:rgba(99,198,111,.55);color:var(--hp)}
-/* join */
-.join{padding:120px 0;background:linear-gradient(180deg,var(--night2),var(--night))}
-.join .card{border:1px solid var(--line);background:var(--panel);padding:56px;display:grid;grid-template-columns:1.1fr .9fr;gap:56px}
-.join h2{font-weight:900;font-size:clamp(34px,4.4vw,58px);line-height:.98;text-transform:uppercase}
-.join h2 b{color:var(--signal)}
-.steps{list-style:none;counter-reset:s}
-.steps li{counter-increment:s;display:flex;gap:18px;padding:16px 0;border-bottom:1px solid var(--line);color:var(--soft)}
-.steps li::before{content:"0" counter(s);font-weight:900;color:var(--signal);font-size:20px;min-width:38px}
-.steps li:last-child{border-bottom:0}
-.note{margin-top:22px;font-size:14px;color:var(--dim);border-left:2px solid var(--signal);padding-left:14px}
-footer{padding:34px 0;border-top:1px solid var(--line);display:flex;justify-content:space-between;color:var(--dim);font-size:14px}
-@media(max-width:760px){
- .top{flex-wrap:wrap;justify-content:center;row-gap:10px}.nav{display:flex;flex-wrap:wrap;justify-content:center;row-gap:6px}.nav a{margin:0 10px;font-size:11.5px;letter-spacing:.09em}
- .top{padding:16px 18px}.hero{height:auto;min-height:600px}.hero-in{padding:0 32px 96px}
- .stats .wrap{grid-template-columns:1fr 1fr}
- .stat{padding:22px 18px}.stat:nth-child(odd){border-left:0}.stat b{font-size:32px}
- .mission{padding:72px 0}.mission .grid{grid-template-columns:1fr;gap:32px}
- .mission.flip .grid .txt{order:0}
- .num{font-size:84px;top:32px;right:18px}.mission:not(.flip) .num{left:18px;right:auto}
- .join .card{grid-template-columns:1fr;padding:32px 22px}
- footer{flex-direction:column;gap:8px;padding:28px 32px}
-}
-@media(max-width:760px){.hero{min-height:660px}.hero-in{padding-top:154px}.hud.tl,.hud.tr{top:148px}}
-.frame .cap{position:static;display:inline-block;margin-top:10px}
-.video-actions{position:absolute;bottom:34px;right:max(20px,5vw);z-index:6;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;max-width:calc(100% - 40px)}
-.video-actions button{background:rgba(11,16,12,.85);color:var(--text);border:1px solid var(--signal);padding:12px 15px;min-height:44px;font:600 12px/1 Arial,sans-serif;letter-spacing:.08em;text-transform:uppercase;cursor:pointer}
-.video-actions .vidpause{position:static}
-.video-actions button:focus-visible{outline:3px solid var(--signal);outline-offset:3px}
-.video-status{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
-@media(max-width:600px){.video-actions{bottom:20px;right:20px}}
+*{margin:0;box-sizing:border-box}
+body{background:#181830;background-image:linear-gradient(rgba(143,159,212,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(143,159,212,.05) 1px,transparent 1px);background-size:28px 28px;color:#1c1c2e;font-family:Kanit,sans-serif;font-size:18px;line-height:1.5}
+a{color:#1e5bbf}
+a:focus-visible,button:focus-visible{outline:3px solid #ffd23f;outline-offset:2px}
+nav{max-width:1260px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:14px;padding:16px 26px;background:#101024;border-bottom:4px solid #2a2a4a;flex-wrap:wrap}
+.wordmark{font-family:"Press Start 2P";font-size:15px;color:#f8f0d8;letter-spacing:1px}.wordmark b{color:#ffd23f}
+.links{display:flex;flex-wrap:wrap;gap:6px 8px}
+.links a{color:#8f9fd4;text-decoration:none;font-weight:600;font-size:15px;text-transform:uppercase;letter-spacing:1px;padding:8px 10px;display:inline-block}
+.links a.on,.links a:hover{color:#ffd23f}
+.hero{max-width:1260px;margin:26px auto 0;padding:0 26px}
+.arena{position:relative;display:block;background:linear-gradient(#7ec850 0 58%,#5aa838 58% 62%,#d8c890 62% 100%);border:4px solid #101024;border-radius:10px;padding:24px}
+.hpbox{width:min(380px,46%)}
+.hpbox.hp-wild{position:absolute;top:40px;left:40px;z-index:2;margin-top:0}
+.hpbox.hp-team{position:absolute;top:320px;right:40px;z-index:2;margin-top:0}
+.opp .plate video{max-height:470px;object-fit:cover}
+@media (max-width:900px){.hpbox.hp-wild,.hpbox.hp-team{position:static;width:auto;margin:0 0 14px}}
+.plate{background:rgba(255,255,255,.14);border-radius:50%;padding:10px}
+.plate video{width:100%;display:block;border-radius:10px;border:3px solid #101024;background:#000}
+.hpbox{background:#f8f0d8;border:3px solid #1c1c2e;border-radius:8px;padding:10px 14px;margin-top:-14px;position:relative;box-shadow:4px 4px 0 rgba(0,0,0,.25)}
+.hpbox .nm{font-weight:700;font-size:16px;letter-spacing:1px;display:flex;justify-content:space-between}
+.hptrack{height:10px;background:#585868;border:2px solid #1c1c2e;border-radius:6px;margin-top:6px;overflow:hidden}
+.hpfill{height:100%;background:linear-gradient(90deg,#38c858,#9ae860)}
+.dlg{margin-top:18px;background:#f8f0d8;border:4px solid #1c1c2e;border-radius:10px;padding:22px 26px;box-shadow:6px 6px 0 rgba(0,0,0,.25)}
+.kicker{font-family:"Press Start 2P";font-size:11px;color:#8a6408;letter-spacing:1px}
+.dlg h1{font-family:"Press Start 2P";font-size:clamp(20px,3.4vw,34px);line-height:1.35;margin:12px 0}
+.dlg .sub{font-size:19px;max-width:62ch}
+.cmds{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:18px}
+.cmd{background:#fff;border:3px solid #1c1c2e;border-radius:8px;padding:14px 18px;font-family:"Press Start 2P";font-size:12px;color:#1c1c2e;text-decoration:none;text-align:left;box-shadow:3px 3px 0 rgba(0,0,0,.2);min-height:48px;display:flex;align-items:center;gap:10px}
+.cmd svg{width:16px;height:16px;flex:none}
+.cmd:hover{background:#ffd23f}
+.cmd.primary{background:#d03a2e;color:#fff;border-color:#8c1f18}
+.cmd.primary:hover{background:#e0503f}
+.sechead{max-width:1260px;margin:30px auto 0;padding:0 26px}
+.sechead .in{border-left:6px solid #ffd23f;padding:2px 0 2px 14px;display:flex;align-items:center;gap:12px}
+.sechead .in svg{width:26px;height:26px;color:#ffd23f;flex:none}
+.sechead .k{font-family:"Press Start 2P";font-size:11px;color:#ffd23f;letter-spacing:1px}
+.sechead .t{color:#f8f0d8;font-weight:700;font-size:22px;margin-top:6px}
+.stats{max-width:1260px;margin:16px auto 0;padding:0 26px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.stat{background:#f8f0d8;border:3px solid #1c1c2e;border-radius:8px;padding:14px 16px;box-shadow:4px 4px 0 rgba(0,0,0,.2)}
+.stat svg{width:26px;height:26px;color:#1c1c2e;display:block;margin-bottom:6px}
+.stat b{font-family:"Press Start 2P";font-size:22px;display:block;color:#b82848}
+.stat span{font-weight:600;font-size:15px}
+.party{max-width:1260px;margin:16px auto 0;padding:0 26px}
+.party .in{background:#f8f0d8;border:3px solid #1c1c2e;border-radius:8px;padding:14px 18px;box-shadow:4px 4px 0 rgba(0,0,0,.2);display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.party .lbl{font-family:"Press Start 2P";font-size:11px;color:#1c1c2e}
+.party .balls{display:flex;gap:10px}
+.pb{width:34px;height:34px;border-radius:50%;border:3px solid #1c1c2e;background:linear-gradient(#e04038 0 46%,#1c1c2e 46% 54%,#f8f8f8 54% 100%);position:relative;flex:none}
+.pb::after{content:"";position:absolute;left:50%;top:50%;width:10px;height:10px;margin:-6px 0 0 -6px;background:#f8f8f8;border:3px solid #1c1c2e;border-radius:50%}
+.party .cap{font-size:16px;color:#4a4a5e}
+.moves{max-width:1260px;margin:16px auto 0;padding:0 26px;display:flex;flex-direction:column;gap:14px}
+.move{background:#f8f0d8;border:4px solid #1c1c2e;border-radius:10px;padding:18px 22px;box-shadow:5px 5px 0 rgba(0,0,0,.22);display:flex;gap:24px;align-items:center}
+.move .pp{font-family:"Press Start 2P";font-size:10px;color:#1e5bbf;display:block;flex:0 0 150px;line-height:1.7}
+.move .txt{flex:1}
+.move h2{font-family:"Press Start 2P";font-size:17px;margin:0 0 8px}
+.move p{font-size:17px}
+.thumb{width:230px;height:150px;object-fit:cover;border:3px solid #1c1c2e;border-radius:8px;box-shadow:4px 4px 0 rgba(0,0,0,.25);flex:none;background:#000}
+.band{max-width:1260px;margin:16px auto 0;padding:0 26px}
+.bandin{background:#f8f0d8;border:4px solid #1c1c2e;border-radius:10px;padding:20px 22px;box-shadow:6px 6px 0 rgba(0,0,0,.25)}
+.bandin .bt{font-family:"Press Start 2P";font-size:14px;margin-bottom:6px;display:flex;align-items:center;gap:10px}
+.bandin .bt svg{width:20px;height:20px;color:#b02820}
+.bandin .bs{font-size:16px;color:#4a4a5e;margin-bottom:12px}
+.bandin video{width:100%;display:block;border:3px solid #1c1c2e;border-radius:8px;background:#000}
+@media (max-width:900px){.move{flex-wrap:wrap}.move .pp{flex:none}.move .txt{flex:1 1 100%;order:3}.thumb{width:100%;height:170px;flex:1 1 100%;order:4}}
+.cta{max-width:1260px;margin:30px auto;padding:0 26px}
+.ctabox{background:#f8f0d8;border:4px solid #1c1c2e;border-radius:10px;padding:24px 26px;box-shadow:6px 6px 0 rgba(0,0,0,.25);display:flex;gap:24px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+.ctabox h2{font-family:"Press Start 2P";font-size:18px;margin-bottom:10px}
+.steps{font-size:17px}.fine{font-size:14px;color:#5a5a6e;margin-top:8px}
+footer{max-width:1260px;margin:0 auto;padding:22px 26px 30px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:#8f9fd4;font-size:15px}
+footer a{color:#8f9fd4}
+.phead{max-width:1260px;margin:26px auto 0;padding:22px 26px;background:#f8f0d8;border:4px solid #1c1c2e;border-radius:10px;box-shadow:5px 5px 0 rgba(0,0,0,.22)}
+.phead .kicker{display:block;margin-bottom:10px}
+.phead h1{font-family:"Press Start 2P";font-size:clamp(18px,3vw,26px)}
+.phead p{margin-top:10px;font-size:18px}
+.panelwrap{max-width:1260px;margin:16px auto;padding:0 26px}
+.leadin{font-size:18px;background:#f8f0d8;border:3px solid #1c1c2e;border-radius:8px;padding:14px 18px;margin-bottom:18px;box-shadow:4px 4px 0 rgba(0,0,0,.2)}
+.logrow{background:#f8f0d8;border:4px solid #1c1c2e;border-radius:10px;padding:16px 20px;box-shadow:5px 5px 0 rgba(0,0,0,.22);display:flex;gap:20px;align-items:center;margin-bottom:14px}
+.logrow .tag{flex:0 0 140px}
+.logrow .num{font-family:"Press Start 2P";font-size:11px;color:#1c1c2e;display:block}
+.logrow .cat{font-family:"Press Start 2P";font-size:9px;letter-spacing:1px;display:inline-block;margin-top:8px;padding:5px 8px;border:2px solid #1c1c2e;border-radius:5px;color:#fff}
+.cat.c-grass{background:#2e7d32}.cat.c-fire{background:#d03a2e}.cat.c-water{background:#1e5bbf}.cat.c-gold{background:#8a6408}
+.logrow .txt{flex:1}
+.logrow h2{font-size:20px;margin:0 0 6px}
+.logrow p{font-size:16px}
+.logrow .thumb{width:210px;height:130px}
+.ftile{width:64px;height:64px;background:#101024;border:3px solid #1c1c2e;border-radius:8px;box-shadow:4px 4px 0 rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;color:#ffd23f;flex:none}
+.ftile svg{width:36px;height:36px}
+@media (max-width:900px){.logrow{flex-wrap:wrap}.logrow .tag{flex:none;display:flex;gap:10px;align-items:center}.logrow .cat{margin-top:0}.logrow .txt{flex:1 1 100%}.logrow .thumb{width:100%;height:170px}}
+.stepgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.step{background:#f8f0d8;border:4px solid #1c1c2e;border-radius:10px;padding:16px 18px;box-shadow:5px 5px 0 rgba(0,0,0,.22)}
+.step .thead{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.step .sic{width:40px;height:40px;background:#101024;border:3px solid #1c1c2e;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#ffd23f;flex:none}
+.step .sic svg{width:22px;height:22px}
+.step b{font-family:"Press Start 2P";font-size:13px;display:block;color:#1c1c2e}
+.step p{font-size:16px;margin-bottom:10px}
+.step .btn{display:inline-block;background:#1e5bbf;color:#fff;border:3px solid #1c1c2e;border-radius:6px;padding:12px 16px;text-decoration:none;font-weight:600;font-size:14px;margin:4px 6px 0 0;min-height:44px}
+.step .ph{display:inline-block;background:#e8ddb8;border:2px dashed #8c8464;border-radius:6px;padding:12px 16px;font-weight:600;font-size:14px;color:#57503c;margin-top:4px}
+.step .ph em{font-style:italic;font-weight:400}
+.fine2{font-size:14px;color:#8f9fd4;margin:14px 0}
+.ctrl{display:grid;grid-template-columns:1fr 1.2fr;gap:18px;margin-top:18px;background:#f8f0d8;border:4px solid #1c1c2e;border-radius:10px;padding:20px;box-shadow:5px 5px 0 rgba(0,0,0,.22)}
+.ctrl .sec{font-family:"Press Start 2P";font-size:15px;margin-bottom:10px}
+.ctrl .lead{font-size:16px;color:#4a4a5e}
+.ctrl figure{margin:14px 0 0}
+.ctrl figure img{width:100%;max-height:220px;object-fit:cover;border:3px solid #1c1c2e;border-radius:8px;display:block;background:#000}
+.ctrl figcaption{font-size:14px;color:#57503c;margin-top:6px}
+.keys{list-style:none;padding:0;display:flex;flex-direction:column;gap:8px}
+.keys li{display:flex;align-items:center;gap:12px;font-size:16px}
+.key{font-family:"Press Start 2P";font-size:10px;background:#1c1c2e;color:#ffd23f;border-radius:6px;padding:7px 10px;min-width:96px;text-align:center;flex:none}
+.updrow{background:#f8f0d8;border:4px solid #1c1c2e;border-radius:10px;padding:18px 22px;box-shadow:5px 5px 0 rgba(0,0,0,.22);display:flex;gap:22px;align-items:center;margin-bottom:14px}
+.updrow .d{font-family:"Press Start 2P";font-size:10px;color:#1e5bbf;flex:0 0 160px;line-height:1.8}
+.updrow .d::before{content:"\25B6\00a0";color:#b02820}
+.updrow .txt{flex:1}
+.updrow b{display:block;font-size:20px;margin:0 0 6px}
+.updrow p{font-size:16px}
+.updrow .thumb{width:230px;height:140px}
+@media (max-width:900px){.updrow{flex-wrap:wrap}.updrow .d{flex:none}.updrow .txt{flex:1 1 100%}.updrow .thumb{width:100%;height:170px}}
+.logend{max-width:1260px;margin:6px auto 0;padding:0 26px;text-align:center}
+.logend span{font-family:"Press Start 2P";font-size:10px;color:#8f9fd4;letter-spacing:2px}
+.supwrap{max-width:1260px;margin:16px auto;padding:0 26px}
+.supbox{background:#f8f0d8;border:4px solid #1c1c2e;border-radius:10px;padding:22px 24px;box-shadow:6px 6px 0 rgba(0,0,0,.25)}
+.npc{font-size:17px;padding:10px 0 10px 40px;position:relative}
+.npc .nic{position:absolute;left:0;top:8px;width:28px;height:28px;background:#101024;border:2px solid #1c1c2e;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#ffd23f}
+.npc .nic svg{width:16px;height:16px}
+.supgrid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:12px}
+.supgrid label{display:block;font-weight:700;font-size:15px;margin:14px 0 6px}
+.supgrid .opt{font-weight:400;color:#57503c;font-size:13px}
+.supgrid input,.supgrid textarea{width:100%;padding:10px;border:3px solid #1c1c2e;border-radius:6px;background:#fffdf4;font-family:inherit;font-size:16px}
+.supgrid input:disabled,.supgrid textarea:disabled{opacity:.65;background:#efe8d0}
+.supgrid .paste{border:3px dashed #8c8464;border-radius:6px;padding:14px;font-size:15px;color:#57503c;background:#fffdf4}
+form{margin:0}
+#request-form{margin-top:12px}
+.count{font-size:14px;color:#57503c;margin-top:6px}
+.hp-honey{position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden}
+.shot-grid{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.shot-card{position:relative}
+.shot-card img{width:96px;height:96px;object-fit:cover;border:3px solid #1c1c2e;border-radius:6px;display:block}
+.shot-card button{position:absolute;top:-8px;right:-8px;background:#d03a2e;color:#fff;border:2px solid #1c1c2e;border-radius:6px;font-size:11px;padding:2px 6px}
+.status{font-weight:600}
+.supgrid button{margin-top:14px;cursor:pointer}background:#1e5bbf;color:#fff;border:3px solid #1c1c2e;border-radius:6px;padding:14px 22px;font-family:"Press Start 2P";font-size:12px;min-height:48px}
+.supgrid button:disabled{opacity:.55;background:#8f9fd4}
+@media (max-width:900px){.stepgrid,.supgrid,.ctrl{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.cmds{grid-template-columns:1fr}}
 
 </style></head><body>
-<header class="top"><div class="brand">Poke<b>World</b></div>
-<nav class="nav"><a class="on" href="index.html">Home</a><a href="how-to-play.html">How to play</a><a href="features.html">Features</a><a href="updates.html">Updates</a><a href="support.html">Support</a></nav></header>
-
-<section class="hero">
-<video autoplay muted loop playsinline aria-hidden="true" tabindex="-1" poster="assets/exploration-poster.jpg"><source src="assets/clips/world-walk.mp4" type="video/mp4"></video>
-<div class="grad"></div>
-<div class="video-actions"><button class="vidpause" type="button" aria-label="Pause background video">Pause</button><button class="vidsound" type="button" aria-label="Unmute background video" aria-pressed="false">Sound on</button></div><span class="video-status" role="status" aria-live="polite"></span>
-<span class="hud tl"></span><span class="hud tr"></span><span class="hud bl"></span><span class="hud br"></span>
-<div class="hero-in wrap">
-<span class="kick">Live multiplayer world</span>
-<h1>Step <span class="o">into</span> the world of pokemon</h1>
-<div class="hp"><span>Adventure</span><div class="bar"><i></i></div><span>Ready</span></div>
-<div class="cta"><a class="btn p" href="how-to-play.html">Start your adventure</a><a class="btn g" href="#world">Watch the world</a></div>
-</div></section>
-
-<section class="stats"><div class="wrap">
-<div class="stat"><b>16</b><span>Badges to earn</span></div>
-<div class="stat"><b>2</b><span>Regions, Kanto + Johto</span></div>
-<div class="stat"><b>8</b><span>Skills to train to 99</span></div>
-<div class="stat"><b>6</b><span>Pokemon on your team</span></div>
-</div></section>
-
-<section class="mission" id="world"><div class="wrap">
-<span class="num">01</span>
-<div class="grid"><div class="txt">
-<span class="tag">Explore</span>
-<h2>The world is the lobby.</h2>
-<p>Walk out of town and the world keeps going — meadows, forests, water, and other trainers crossing the same ground.</p>
-<p>Bring up the world map and fly back to any town you have visited.</p>
+<nav><span class="wordmark">POKE<b>WORLD</b></span><span class="links"><a class="on" href="index.html">Home</a><a href="how-to-play.html">How to play</a><a href="features.html">Features</a><a href="updates.html">Updates</a><a href="support.html">Support</a></span></nav>
+<header class="hero"><div class="arena">
+<div class="hpbox hp-wild"><div class="nm"><span>POKEWORLD</span><span>WILD AREA</span></div><div class="hptrack"><div class="hpfill" style="width:100%"></div></div></div>
+<div class="opp"><div class="plate"><video autoplay muted loop playsinline poster="https://ddhkim-gop.github.io/pokeworld-site/assets/exploration-poster.jpg"><source src="https://ddhkim-gop.github.io/pokeworld-site/assets/clips/world-walk.mp4" type="video/mp4"></video></div></div>
+<div class="hpbox hp-team"><div class="nm"><span>YOUR TEAM</span><span>6 / 6</span></div><div class="hptrack"><div class="hpfill" style="width:100%"></div></div></div>
+<div class="dlg"><span class="kicker">Live multiplayer world</span><h1>Step into the world of Pok&eacute;mon</h1><p class="sub">Walk out of town and the world keeps going &mdash; meadows, forests, water, and other trainers crossing the same ground.</p>
+<div class="cmds"><a class="cmd primary" href="how-to-play.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9.5l5 2.5-5 2.5z" fill="currentColor" stroke="none"/></svg> Start your adventure</a><a class="cmd" href="features.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5-5.9-3.1-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z"/></svg> See the features</a>
+<a class="cmd" href="#world"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg> Watch the world</a><a class="cmd" href="updates.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg> Latest updates</a></div></div>
+</div></header>
+<div class="sechead"><div class="in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.5" fill="currentColor" stroke="none"/></svg><div><span class="k">TRAINER CARD</span><div class="t">The world at a glance</div></div></div></div>
+<div class="stats"><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.5" fill="currentColor" stroke="none"/></svg><b>16</b><span>Badges to earn</span></div><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-5.8-7-11a7 7 0 0 1 14 0c0 5.2-7 11-7 11z"/><circle cx="12" cy="10" r="2.6" fill="currentColor" stroke="none"/></svg><b>2</b><span>Regions, Kanto + Johto</span></div><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5-5.9-3.1-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z"/></svg><b>8</b><span>Skills to train to 99</span></div><div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><circle cx="12" cy="12" r="3"/></svg><b>6</b><span>Pok&eacute;mon on your team</span></div></div>
+<div class="party"><div class="in"><span class="lbl">YOUR PARTY</span><span class="balls" aria-hidden="true"><span class="pb"></span><span class="pb"></span><span class="pb"></span><span class="pb"></span><span class="pb"></span><span class="pb"></span></span><span class="cap">A team of six travels with you.</span></div></div>
+<div class="sechead"><div class="in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z" fill="currentColor" stroke="none"/></svg><div><span class="k">CHOOSE A MOVE</span><div class="t">Three ways to play</div></div></div></div>
+<div class="moves">
+<section class="move"><span class="pp">MOVE 01 &middot; WORLD</span><div class="txt"><h2>Explore</h2><p>Walk through towns and forests with your lead Pok&eacute;mon beside you. Bring up the world map and fly back to any town you have visited.</p></div><img class="thumb" src="https://ddhkim-gop.github.io/pokeworld-site/assets/world-hero.jpg" alt="A trainer and Pikachu walking a stone path through a village" loading="lazy"></section>
+<section class="move"><span class="pp">MOVE 02 &middot; BATTLE</span><div class="txt"><h2>Battle</h2><p>Lock on, dodge in real time, pick your moves, and throw a Poke Ball while the battle plays out in the world around you. Gym Leaders put your team of six to the test.</p></div><img class="thumb" src="https://ddhkim-gop.github.io/pokeworld-site/assets/battle-poster.jpg" alt="A battle between Pidgey and Pikachu in the rain" loading="lazy"></section>
+<section class="move"><span class="pp">MOVE 03 &middot; TRAIN</span><div class="txt"><h2>Train</h2><p>Every skill levels from 1 to 99 by doing it. Cast a line, swing a pick, cook over a campfire &mdash; the world keeps score.</p></div><img class="thumb" src="https://ddhkim-gop.github.io/pokeworld-site/assets/skills.jpg" alt="The skills panel in the game" loading="lazy"></section>
 </div>
-<div class="frame"><span class="tick a"></span><span class="tick b"></span><span class="tick c"></span><span class="tick d"></span>
-<img src="assets/world-hero.jpg" alt="A trainer and Pikachu looking over the water at sunset"><span class="cap">Actual gameplay</span></div>
-</div></div></section>
-
-<section class="mission flip"><div class="wrap">
-<span class="num">02</span>
-<div class="grid"><div class="txt">
-<span class="tag">Battle</span>
-<h2>Fights happen where you stand.</h2>
-<p>Lock on, dodge in real time, pick your moves, and throw a Poke Ball while the battle plays out in the world around you. Gym Leaders put your team of six to the test.</p>
-</div>
-<div class="frame"><span class="tick a"></span><span class="tick b"></span><span class="tick c"></span><span class="tick d"></span>
-<video controls preload="none" playsinline poster="assets/battle-poster.jpg" src="assets/clips/battle.mp4"></video>
-<span class="cap">Gameplay demonstration</span></div>
-</div></div></section>
-
-<section class="skills"><div class="wrap">
-<span class="tag">Train</span>
-<h2>Eight ways to grow.</h2>
-<p class="sub">Every skill levels from 1 to 99 by doing it. Cast a line, swing a pick, cook over a campfire — the world keeps score.</p>
-<div class="chips">
-<span class="chip">Fishing</span><span class="chip">Foraging</span><span class="chip">Mining</span><span class="chip">Agility</span>
-<span class="chip">Crafting</span><span class="chip">Cooking</span><span class="chip hot">Firemaking</span><span class="chip">Woodcutting</span>
-</div></div></section>
-
-<section class="join"><div class="wrap"><div class="card">
-<div><span class="tag">Deploy</span>
-<h2>Squad up.<br><b>Your adventure</b> starts here.</h2>
-<p class="note">This website is separate from the game. Opening this page does not grant game access.</p>
-<div class="cta" style="margin-top:26px"><a class="btn p" href="how-to-play.html">How to join</a></div>
-</div>
-<ol class="steps">
-<li>Install Tailscale and sign in</li>
-<li>Accept the game invite</li>
-<li>Open PokeWorld and pick your trainer name</li>
-<li>Walk out. The world is already running.</li>
-</ol>
-</div></div></section>
-
-<footer><span>PokeWorld — a world to explore together.</span><span>A question, an idea, a bug? Tell us.</span></footer>
-<script>
-// Stage with real audio-bearing replacement clips. No autoplay sound.
-const video=document.querySelector('.hero video');
-const pause=document.querySelector('.vidpause');
-const sound=document.querySelector('.vidsound');
-if(video&&pause&&sound){
- const status=document.querySelector('.video-status');
- const sync=()=>{
-  pause.textContent=video.paused?'Play':'Pause';pause.setAttribute('aria-label',video.paused?'Play background video':'Pause background video');
-  const audible=!video.muted&&video.volume>0;sound.textContent=audible?'Sound off':'Sound on';sound.setAttribute('aria-pressed',String(audible));sound.setAttribute('aria-label',audible?'Mute background video':'Unmute background video');
- };
- const failed=()=>{video.muted=true;if(status)status.textContent='Playback could not start. Try Play again.';sync();};
- pause.addEventListener('click',async()=>{if(status)status.textContent='';if(video.paused){try{await video.play();}catch{failed();}}else video.pause();sync();});
- sound.addEventListener('click',async()=>{if(status)status.textContent='';video.muted=!video.muted;if(!video.muted&&video.volume===0)video.volume=1;try{if(!video.muted&&video.paused)await video.play();}catch{failed();}sync();});
- for(const event of ['play','pause','volumechange','ended'])video.addEventListener(event,sync);
- // Background and battle sound should not play on top of each other.
- for(const clip of document.querySelectorAll('video[controls]'))clip.addEventListener('play',()=>{video.muted=true;sync();});
- video.muted=true;sync();
-}
-
-</script>
-</body></html>
+<div class="sechead"><div class="in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9.5l5 2.5-5 2.5z" fill="currentColor" stroke="none"/></svg><div><span class="k">REPLAY</span><div class="t">See it in motion</div></div></div></div>
+<div class="band" id="world"><div class="bandin"><div class="bt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9.5l5 2.5-5 2.5z" fill="currentColor" stroke="none"/></svg> WATCH A BATTLE</div><div class="bs">Real-time, right in the world.</div>
+<video controls preload="none" playsinline poster="https://ddhkim-gop.github.io/pokeworld-site/assets/battle-poster.jpg"><source src="https://ddhkim-gop.github.io/pokeworld-site/assets/clips/battle.mp4" type="video/mp4"></video></div></div>
+<div class="cta"><div class="ctabox"><div><h2>Start your adventure</h2><p class="steps"><b>1.</b> Install Tailscale and sign in &nbsp;&middot;&nbsp; <b>2.</b> Accept the game invite &nbsp;&middot;&nbsp; <b>3.</b> Open PokeWorld and pick your trainer name</p><p class="fine">This website is separate from the game. Opening this page does not grant game access.</p></div>
+<a class="cmd primary" href="how-to-play.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9.5l5 2.5-5 2.5z" fill="currentColor" stroke="none"/></svg> How to join</a></div></div>
+<footer><span>PokeWorld &mdash; a world to explore together.</span><span>A question, an idea, a bug? <a href="support.html">Tell us.</a></span></footer>
+<script src="config.js"></script><script src="site.js"></script></body></html>
