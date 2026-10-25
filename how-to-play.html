@@ -1,47 +1,148 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>How to play — PokeWorld</title><meta name="description" content="Join PokeWorld: install Tailscale, accept the invite, and open the game."><meta name="theme-color" content="#0b100c"><meta property="og:title" content="How to play — PokeWorld"><meta property="og:description" content="Join PokeWorld: install Tailscale, accept the invite, and open the game."><meta property="og:image" content="https://ddhkim-gop.github.io/pokeworld-site/assets/world-hero.jpg"><meta property="og:type" content="website"><link rel="stylesheet" href="signal.css"></head><body>
-<header class="top"><div class="brand">Poke<b>World</b></div>
-<nav class="nav"><a href="index.html">Home</a><a href="how-to-play.html" class="on">How to play</a><a href="features.html">Features</a><a href="updates.html">Updates</a><a href="support.html">Support</a></nav></header>
-<section class="page-head"><div class="wrap">
-<span class="kick">How to play</span>
-<h1>Take the first step.</h1>
-<p class="sub">A little preparation, then a whole world to explore.</p>
-</div></section>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PokeWorld - Battle Screen (full draft)</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Kanit:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
 
-<section><div class="wrap">
-<p class="sub" style="padding-top:50px;color:var(--soft);max-width:40em">The game runs on a private computer, so you join through Tailscale first. It is free, and everything you need is right here.</p>
-<ol class="steps2">
-<li><div><h3>Install Tailscale</h3>
-<p>Install Tailscale on the device you will play on, then sign in with your own account, such as Google.</p>
-<div class="acts"><a class="btn p s" target="_blank" rel="noopener noreferrer" href="https://tailscale.com/download/windows">Download for Windows PC</a><a class="btn g s" target="_blank" rel="noopener noreferrer" href="https://tailscale.com/download/mac">Download for Mac</a><a class="btn g s" target="_blank" rel="noopener noreferrer" href="https://tailscale.com/download">Other devices</a></div></div></li>
-<li><div><h3>Accept the game invite</h3>
-<p>Accept the game invite. This adds the game computer to your Tailscale.</p>
-<div class="acts"><a class="btn p s" target="_blank" rel="noopener noreferrer" href="https://login.tailscale.com/admin/invite/2VxAYofNfKHv54vaBGnd11">Accept the game invite</a></div>
-<p class="small-note">If the invite does not work, ask the person who invited you for a new one.</p></div></li>
-<li><div><h3>Open the game</h3>
-<p>Make sure Tailscale says Connected, then open the game. Keep Tailscale on while you play.</p>
-<div class="acts"><a class="btn p s" target="_blank" rel="noopener noreferrer" data-game-url href="http://100.99.175.107:8990/?mp=1">Open PokeWorld</a></div></div></li>
-<li><div><h3>Choose your account</h3>
-<p>New players: enter a new trainer name to create your account. Returning players: enter your existing trainer name to load your saved progress. Use the same name each time. Only enter your own name, because anyone with access could type any trainer name.</p></div></li>
-<li><div><h3>Keep your progress</h3>
-<p>Slot 1 syncs to the game server. Other save slots stay in that browser. Use the menu's Save page before you leave.</p></div></li>
-</ol>
-<p class="callout2">This website is separate from the game. Opening this page does not grant game access.</p>
-</div></section>
+*{margin:0;box-sizing:border-box}
+body{background:#181830;background-image:linear-gradient(rgba(143,159,212,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(143,159,212,.05) 1px,transparent 1px);background-size:28px 28px;color:#1c1c2e;font-family:Kanit,sans-serif;font-size:18px;line-height:1.5}
+a{color:#1e5bbf}
+a:focus-visible,button:focus-visible{outline:3px solid #ffd23f;outline-offset:2px}
+nav{max-width:1260px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:14px;padding:16px 26px;background:#101024;border-bottom:4px solid #2a2a4a;flex-wrap:wrap}
+.wordmark{font-family:"Press Start 2P";font-size:15px;color:#f8f0d8;letter-spacing:1px}.wordmark b{color:#ffd23f}
+.links{display:flex;flex-wrap:wrap;gap:6px 8px}
+.links a{color:#8f9fd4;text-decoration:none;font-weight:600;font-size:15px;text-transform:uppercase;letter-spacing:1px;padding:8px 10px;display:inline-block}
+.links a.on,.links a:hover{color:#ffd23f}
+.hero{max-width:1260px;margin:26px auto 0;padding:0 26px}
+.arena{position:relative;display:block;background:linear-gradient(#7ec850 0 58%,#5aa838 58% 62%,#d8c890 62% 100%);border:4px solid #101024;border-radius:10px;padding:24px}
+.hpbox{width:min(380px,46%)}
+.hpbox.hp-wild{position:absolute;top:40px;left:40px;z-index:2;margin-top:0}
+.hpbox.hp-team{position:absolute;top:320px;right:40px;z-index:2;margin-top:0}
+.opp .plate video{max-height:470px;object-fit:cover}
+@media (max-width:900px){.hpbox.hp-wild,.hpbox.hp-team{position:static;width:auto;margin:0 0 14px}}
+.plate{background:rgba(255,255,255,.14);border-radius:50%;padding:10px}
+.plate video{width:100%;display:block;border-radius:10px;border:3px solid #101024;background:#000}
+.hpbox{background:#f8f0d8;border:3px solid #1c1c2e;border-radius:8px;padding:10px 14px;margin-top:-14px;position:relative;box-shadow:4px 4px 0 rgba(0,0,0,.25)}
+.hpbox .nm{font-weight:700;font-size:16px;letter-spacing:1px;display:flex;justify-content:space-between}
+.hptrack{height:10px;background:#585868;border:2px solid #1c1c2e;border-radius:6px;margin-top:6px;overflow:hidden}
+.hpfill{height:100%;background:linear-gradient(90deg,#38c858,#9ae860)}
+.dlg{margin-top:18px;background:#f8f0d8;border:4px solid #1c1c2e;border-radius:10px;padding:22px 26px;box-shadow:6px 6px 0 rgba(0,0,0,.25)}
+.kicker{font-family:"Press Start 2P";font-size:11px;color:#8a6408;letter-spacing:1px}
+.dlg h1{font-family:"Press Start 2P";font-size:clamp(20px,3.4vw,34px);line-height:1.35;margin:12px 0}
+.dlg .sub{font-size:19px;max-width:62ch}
+.cmds{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:18px}
+.cmd{background:#fff;border:3px solid #1c1c2e;border-radius:8px;padding:14px 18px;font-family:"Press Start 2P";font-size:12px;color:#1c1c2e;text-decoration:none;text-align:left;box-shadow:3px 3px 0 rgba(0,0,0,.2);min-height:48px;display:flex;align-items:center;gap:10px}
+.cmd svg{width:16px;height:16px;flex:none}
+.cmd:hover{background:#ffd23f}
+.cmd.primary{background:#d03a2e;color:#fff;border-color:#8c1f18}
+.cmd.primary:hover{background:#e0503f}
+.sechead{max-width:1260px;margin:30px auto 0;padding:0 26px}
+.sechead .in{border-left:6px solid #ffd23f;padding:2px 0 2px 14px;display:flex;align-items:center;gap:12px}
+.sechead .in svg{width:26px;height:26px;color:#ffd23f;flex:none}
+.sechead .k{font-family:"Press Start 2P";font-size:11px;color:#ffd23f;letter-spacing:1px}
+.sechead .t{color:#f8f0d8;font-weight:700;font-size:22px;margin-top:6px}
+.stats{max-width:1260px;margin:16px auto 0;padding:0 26px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.stat{background:#f8f0d8;border:3px solid #1c1c2e;border-radius:8px;padding:14px 16px;box-shadow:4px 4px 0 rgba(0,0,0,.2)}
+.stat svg{width:26px;height:26px;color:#1c1c2e;display:block;margin-bottom:6px}
+.stat b{font-family:"Press Start 2P";font-size:22px;display:block;color:#b82848}
+.stat span{font-weight:600;font-size:15px}
+.party{max-width:1260px;margin:16px auto 0;padding:0 26px}
+.party .in{background:#f8f0d8;border:3px solid #1c1c2e;border-radius:8px;padding:14px 18px;box-shadow:4px 4px 0 rgba(0,0,0,.2);display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.party .lbl{font-family:"Press Start 2P";font-size:11px;color:#1c1c2e}
+.party .balls{display:flex;gap:10px}
+.pb{width:34px;height:34px;border-radius:50%;border:3px solid #1c1c2e;background:linear-gradient(#e04038 0 46%,#1c1c2e 46% 54%,#f8f8f8 54% 100%);position:relative;flex:none}
+.pb::after{content:"";position:absolute;left:50%;top:50%;width:10px;height:10px;margin:-6px 0 0 -6px;background:#f8f8f8;border:3px solid #1c1c2e;border-radius:50%}
+.party .cap{font-size:16px;color:#4a4a5e}
+.moves{max-width:1260px;margin:16px auto 0;padding:0 26px;display:flex;flex-direction:column;gap:14px}
+.move{background:#f8f0d8;border:4px solid #1c1c2e;border-radius:10px;padding:18px 22px;box-shadow:5px 5px 0 rgba(0,0,0,.22);display:flex;gap:24px;align-items:center}
+.move .pp{font-family:"Press Start 2P";font-size:10px;color:#1e5bbf;display:block;flex:0 0 150px;line-height:1.7}
+.move .txt{flex:1}
+.move h2{font-family:"Press Start 2P";font-size:17px;margin:0 0 8px}
+.move p{font-size:17px}
+.thumb{width:230px;height:150px;object-fit:cover;border:3px solid #1c1c2e;border-radius:8px;box-shadow:4px 4px 0 rgba(0,0,0,.25);flex:none;background:#000}
+.band{max-width:1260px;margin:16px auto 0;padding:0 26px}
+.bandin{background:#f8f0d8;border:4px solid #1c1c2e;border-radius:10px;padding:20px 22px;box-shadow:6px 6px 0 rgba(0,0,0,.25)}
+.bandin .bt{font-family:"Press Start 2P";font-size:14px;margin-bottom:6px;display:flex;align-items:center;gap:10px}
+.bandin .bt svg{width:20px;height:20px;color:#b02820}
+.bandin .bs{font-size:16px;color:#4a4a5e;margin-bottom:12px}
+.bandin video{width:100%;display:block;border:3px solid #1c1c2e;border-radius:8px;background:#000}
+@media (max-width:900px){.move{flex-wrap:wrap}.move .pp{flex:none}.move .txt{flex:1 1 100%;order:3}.thumb{width:100%;height:170px;flex:1 1 100%;order:4}}
+.cta{max-width:1260px;margin:30px auto;padding:0 26px}
+.ctabox{background:#f8f0d8;border:4px solid #1c1c2e;border-radius:10px;padding:24px 26px;box-shadow:6px 6px 0 rgba(0,0,0,.25);display:flex;gap:24px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+.ctabox h2{font-family:"Press Start 2P";font-size:18px;margin-bottom:10px}
+.steps{font-size:17px}.fine{font-size:14px;color:#5a5a6e;margin-top:8px}
+footer{max-width:1260px;margin:0 auto;padding:22px 26px 30px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:#8f9fd4;font-size:15px}
+footer a{color:#8f9fd4}
+.phead{max-width:1260px;margin:26px auto 0;padding:22px 26px;background:#f8f0d8;border:4px solid #1c1c2e;border-radius:10px;box-shadow:5px 5px 0 rgba(0,0,0,.22)}
+.phead .kicker{display:block;margin-bottom:10px}
+.phead h1{font-family:"Press Start 2P";font-size:clamp(18px,3vw,26px)}
+.phead p{margin-top:10px;font-size:18px}
+.panelwrap{max-width:1260px;margin:16px auto;padding:0 26px}
+.leadin{font-size:18px;background:#f8f0d8;border:3px solid #1c1c2e;border-radius:8px;padding:14px 18px;margin-bottom:18px;box-shadow:4px 4px 0 rgba(0,0,0,.2)}
+.logrow{background:#f8f0d8;border:4px solid #1c1c2e;border-radius:10px;padding:16px 20px;box-shadow:5px 5px 0 rgba(0,0,0,.22);display:flex;gap:20px;align-items:center;margin-bottom:14px}
+.logrow .tag{flex:0 0 140px}
+.logrow .num{font-family:"Press Start 2P";font-size:11px;color:#1c1c2e;display:block}
+.logrow .cat{font-family:"Press Start 2P";font-size:9px;letter-spacing:1px;display:inline-block;margin-top:8px;padding:5px 8px;border:2px solid #1c1c2e;border-radius:5px;color:#fff}
+.cat.c-grass{background:#2e7d32}.cat.c-fire{background:#d03a2e}.cat.c-water{background:#1e5bbf}.cat.c-gold{background:#8a6408}
+.logrow .txt{flex:1}
+.logrow h2{font-size:20px;margin:0 0 6px}
+.logrow p{font-size:16px}
+.logrow .thumb{width:210px;height:130px}
+.ftile{width:64px;height:64px;background:#101024;border:3px solid #1c1c2e;border-radius:8px;box-shadow:4px 4px 0 rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;color:#ffd23f;flex:none}
+.ftile svg{width:36px;height:36px}
+@media (max-width:900px){.logrow{flex-wrap:wrap}.logrow .tag{flex:none;display:flex;gap:10px;align-items:center}.logrow .cat{margin-top:0}.logrow .txt{flex:1 1 100%}.logrow .thumb{width:100%;height:170px}}
+.stepgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.step{background:#f8f0d8;border:4px solid #1c1c2e;border-radius:10px;padding:16px 18px;box-shadow:5px 5px 0 rgba(0,0,0,.22)}
+.step .thead{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.step .sic{width:40px;height:40px;background:#101024;border:3px solid #1c1c2e;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#ffd23f;flex:none}
+.step .sic svg{width:22px;height:22px}
+.step b{font-family:"Press Start 2P";font-size:13px;display:block;color:#1c1c2e}
+.step p{font-size:16px;margin-bottom:10px}
+.step .btn{display:inline-block;background:#1e5bbf;color:#fff;border:3px solid #1c1c2e;border-radius:6px;padding:12px 16px;text-decoration:none;font-weight:600;font-size:14px;margin:4px 6px 0 0;min-height:44px}
+.step .ph{display:inline-block;background:#e8ddb8;border:2px dashed #8c8464;border-radius:6px;padding:12px 16px;font-weight:600;font-size:14px;color:#57503c;margin-top:4px}
+.step .ph em{font-style:italic;font-weight:400}
+.fine2{font-size:14px;color:#8f9fd4;margin:14px 0}
+.ctrl{display:grid;grid-template-columns:1fr 1.2fr;gap:18px;margin-top:18px;background:#f8f0d8;border:4px solid #1c1c2e;border-radius:10px;padding:20px;box-shadow:5px 5px 0 rgba(0,0,0,.22)}
+.ctrl .sec{font-family:"Press Start 2P";font-size:15px;margin-bottom:10px}
+.ctrl .lead{font-size:16px;color:#4a4a5e}
+.ctrl figure{margin:14px 0 0}
+.ctrl figure img{width:100%;max-height:220px;object-fit:cover;border:3px solid #1c1c2e;border-radius:8px;display:block;background:#000}
+.ctrl figcaption{font-size:14px;color:#57503c;margin-top:6px}
+.keys{list-style:none;padding:0;display:flex;flex-direction:column;gap:8px}
+.keys li{display:flex;align-items:center;gap:12px;font-size:16px}
+.key{font-family:"Press Start 2P";font-size:10px;background:#1c1c2e;color:#ffd23f;border-radius:6px;padding:7px 10px;min-width:96px;text-align:center;flex:none}
+.updrow{background:#f8f0d8;border:4px solid #1c1c2e;border-radius:10px;padding:18px 22px;box-shadow:5px 5px 0 rgba(0,0,0,.22);display:flex;gap:22px;align-items:center;margin-bottom:14px}
+.updrow .d{font-family:"Press Start 2P";font-size:10px;color:#1e5bbf;flex:0 0 160px;line-height:1.8}
+.updrow .d::before{content:"\25B6\00a0";color:#b02820}
+.updrow .txt{flex:1}
+.updrow b{display:block;font-size:20px;margin:0 0 6px}
+.updrow p{font-size:16px}
+.updrow .thumb{width:230px;height:140px}
+@media (max-width:900px){.updrow{flex-wrap:wrap}.updrow .d{flex:none}.updrow .txt{flex:1 1 100%}.updrow .thumb{width:100%;height:170px}}
+.logend{max-width:1260px;margin:6px auto 0;padding:0 26px;text-align:center}
+.logend span{font-family:"Press Start 2P";font-size:10px;color:#8f9fd4;letter-spacing:2px}
+.supwrap{max-width:1260px;margin:16px auto;padding:0 26px}
+.supbox{background:#f8f0d8;border:4px solid #1c1c2e;border-radius:10px;padding:22px 24px;box-shadow:6px 6px 0 rgba(0,0,0,.25)}
+.npc{font-size:17px;padding:10px 0 10px 40px;position:relative}
+.npc .nic{position:absolute;left:0;top:8px;width:28px;height:28px;background:#101024;border:2px solid #1c1c2e;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#ffd23f}
+.npc .nic svg{width:16px;height:16px}
+.supgrid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:12px}
+.supgrid label{display:block;font-weight:700;font-size:15px;margin:14px 0 6px}
+.supgrid .opt{font-weight:400;color:#57503c;font-size:13px}
+.supgrid input,.supgrid textarea{width:100%;padding:10px;border:3px solid #1c1c2e;border-radius:6px;background:#fffdf4;font-family:inherit;font-size:16px}
+.supgrid input:disabled,.supgrid textarea:disabled{opacity:.65;background:#efe8d0}
+.supgrid .paste{border:3px dashed #8c8464;border-radius:6px;padding:14px;font-size:15px;color:#57503c;background:#fffdf4}
+form{margin:0}
+#request-form{margin-top:12px}
+.count{font-size:14px;color:#57503c;margin-top:6px}
+.hp-honey{position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden}
+.shot-grid{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.shot-card{position:relative}
+.shot-card img{width:96px;height:96px;object-fit:cover;border:3px solid #1c1c2e;border-radius:6px;display:block}
+.shot-card button{position:absolute;top:-8px;right:-8px;background:#d03a2e;color:#fff;border:2px solid #1c1c2e;border-radius:6px;font-size:11px;padding:2px 6px}
+.status{font-weight:600}
+.supgrid button{margin-top:14px;cursor:pointer}background:#1e5bbf;color:#fff;border:3px solid #1c1c2e;border-radius:6px;padding:14px 22px;font-family:"Press Start 2P";font-size:12px;min-height:48px}
+.supgrid button:disabled{opacity:.55;background:#8f9fd4}
+@media (max-width:900px){.stepgrid,.supgrid,.ctrl{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.cmds{grid-template-columns:1fr}}
 
-<section class="keys"><div class="wrap">
-<span class="tag">Controls</span>
-<h2>The basics</h2>
-<p class="sub">Default keys are listed below. You can change them on the game's Controls page. Menus and battle actions also support clicks.</p>
-<div class="kgrid">
-<div class="krow">Walk <kbd>Arrow keys</kbd></div>
-<div class="krow">Run <kbd>Shift</kbd></div>
-<div class="krow">Talk / use <kbd>F</kbd></div>
-<div class="krow">Menu <kbd>Enter</kbd></div>
-<div class="krow">Map <kbd>M</kbd></div>
-<div class="krow">Fish at water <kbd>H</kbd></div>
-<div class="krow">Battle movement <kbd>W A S D</kbd></div>
-<div class="krow">Battle moves <kbd>1 - 4</kbd></div>
-<div class="krow">Dodge in battle <kbd>Space</kbd></div>
-<div class="krow">Poké Ball in battle <kbd>E</kbd></div>
-</div></div></section>
-<footer><span>PokeWorld — a world to explore together.</span><span>A question, an idea, a bug? Tell us.</span></footer><script src="config.js"></script><script src="site.js"></script></body></html>
+</style></head><body>
+<nav><span class="wordmark">POKE<b>WORLD</b></span><span class="links"><a href="index.html">Home</a><a class="on" href="how-to-play.html">How to play</a><a href="features.html">Features</a><a href="updates.html">Updates</a><a href="support.html">Support</a></span></nav><div class="phead"><span class="kicker">START MENU</span><h1>How to play</h1><p>Take the first step. A little preparation, then a whole world to explore.</p></div><div class="panelwrap"><p class="leadin">The game runs on a private computer, so you join through Tailscale first. It is free, and everything you need is right here.</p><div class="stepgrid"><div class="step"><div class="thead"><span class="sic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v10M7.5 9.5L12 14l4.5-4.5"/><path d="M4 17v3h16v-3"/></svg></span><b>1. Install Tailscale</b></div><p>Install Tailscale on the device you will play on, then sign in with your own account, such as Google.</p><a class="btn" href="https://tailscale.com/download/windows">Download for Windows PC</a><a class="btn" href="https://tailscale.com/download/mac">Download for Mac</a><a class="btn" href="https://tailscale.com/download">Other devices</a></div><div class="step"><div class="thead"><span class="sic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span><b>2. Accept the game invite</b></div><p>Accept the game invite. This adds the game computer to your Tailscale. If the invite does not work, ask the person who invited you for a new one.</p><a class="btn" target="_blank" rel="noopener noreferrer" href="https://login.tailscale.com/admin/invite/2VxAYofNfKHv54vaBGnd11">Accept the game invite</a></div><div class="step"><div class="thead"><span class="sic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9.5l5 2.5-5 2.5z" fill="currentColor" stroke="none"/></svg></span><b>3. Open the game</b></div><p>Make sure Tailscale says Connected, then open the game. Keep Tailscale on while you play.</p><a class="btn" target="_blank" rel="noopener noreferrer" data-game-url href="http://100.99.175.107:8990/?mp=1">Open PokeWorld</a></div><div class="step"><div class="thead"><span class="sic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="11" r="2"/><path d="M13.5 9.5H18M13.5 13H18M5 16.5h14"/></svg></span><b>4. Choose your account</b></div><p>New players: enter a new trainer name to create your account. Returning players: enter your existing trainer name to load your saved progress. Use the same name each time. Only enter your own name, because anyone with access could type any trainer name.</p></div><div class="step"><div class="thead"><span class="sic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3h12l4 4v14H5z"/><path d="M8 3v5h8V3"/><rect x="8" y="13" width="8" height="8"/></svg></span><b>5. Keep your progress</b></div><p>Slot 1 syncs to the game server. Other save slots stay in that browser. Use the menu's Save page before you leave.</p></div></div><p class="fine2">This website is separate from the game. Opening this page does not grant game access.</p><div class="ctrl"><div><h2 class="sec">CONTROLS</h2><p class="lead">The basics. Default keys are listed below. You can change them on the game's Controls page. Menus and battle actions also support clicks.</p><figure><img src="https://ddhkim-gop.github.io/pokeworld-site/assets/map.jpg" alt="The world map in the game" loading="lazy"><figcaption>The world map (M).</figcaption></figure></div><ul class="keys"><li><span class="key">Arrow keys</span><span>Walk</span></li><li><span class="key">Shift</span><span>Run</span></li><li><span class="key">F</span><span>Talk / use</span></li><li><span class="key">Enter</span><span>Menu</span></li><li><span class="key">M</span><span>Map</span></li><li><span class="key">H</span><span>Fish at water</span></li><li><span class="key">W A S D</span><span>Battle movement</span></li><li><span class="key">1 - 4</span><span>Battle moves</span></li><li><span class="key">Space</span><span>Dodge in battle</span></li><li><span class="key">E</span><span>Pok&eacute; Ball in battle</span></li></ul></div></div><footer><span>PokeWorld &mdash; a world to explore together.</span><span>A question, an idea, a bug? <a href="support.html">Tell us.</a></span></footer><script src="config.js"></script><script src="site.js"></script></body></html>
