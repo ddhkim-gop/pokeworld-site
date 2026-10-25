@@ -1,87 +1,148 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Features — PokeWorld</title><meta name="description" content="Real-time battles, eight trainable skills, campfire cooking, quests and more in PokeWorld."><meta name="theme-color" content="#0b100c"><meta property="og:title" content="Features — PokeWorld"><meta property="og:description" content="Real-time battles, eight trainable skills, campfire cooking, quests and more in PokeWorld."><meta property="og:image" content="https://ddhkim-gop.github.io/pokeworld-site/assets/world-hero.jpg"><meta property="og:type" content="website"><link rel="stylesheet" href="signal.css"></head><body>
-<header class="top"><div class="brand">Poke<b>World</b></div>
-<nav class="nav"><a href="index.html">Home</a><a href="how-to-play.html">How to play</a><a href="features.html" class="on">Features</a><a href="updates.html">Updates</a><a href="support.html">Support</a></nav></header>
-<section class="page-head"><div class="wrap">
-<span class="kick">Features</span>
-<h1>Go where curiosity leads.</h1>
-<p class="sub">Build a team, find your favorite place, and share the journey.</p>
-</div></section>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PokeWorld - Battle Screen (full draft)</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Kanit:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
 
-<section class="feat"><div class="wrap"><span class="num">01</span>
-<div class="grid"><div class="txt"><span class="tag">World</span>
-<h2>A world in three dimensions</h2>
-<p>Walk through towns and forests with your lead Pokémon beside you. Open the map when it's time to head somewhere new, and fly back to any town you have visited. Two regions, Kanto and Johto, hold towns, forests, and interiors to step inside.</p>
-</div><div class="frame"><span class="tick a"></span><span class="tick b"></span><span class="tick c"></span><span class="tick d"></span>
-<video controls preload="none" playsinline poster="assets/exploration-poster.jpg" src="assets/clips/world-walk.mp4"></video><span class="cap">Actual gameplay</span></div>
-</div></div></section>
+*{margin:0;box-sizing:border-box}
+body{background:#181830;background-image:linear-gradient(rgba(143,159,212,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(143,159,212,.05) 1px,transparent 1px);background-size:28px 28px;color:#1c1c2e;font-family:Kanit,sans-serif;font-size:18px;line-height:1.5}
+a{color:#1e5bbf}
+a:focus-visible,button:focus-visible{outline:3px solid #ffd23f;outline-offset:2px}
+nav{max-width:1260px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:14px;padding:16px 26px;background:#101024;border-bottom:4px solid #2a2a4a;flex-wrap:wrap}
+.wordmark{font-family:"Press Start 2P";font-size:15px;color:#f8f0d8;letter-spacing:1px}.wordmark b{color:#ffd23f}
+.links{display:flex;flex-wrap:wrap;gap:6px 8px}
+.links a{color:#8f9fd4;text-decoration:none;font-weight:600;font-size:15px;text-transform:uppercase;letter-spacing:1px;padding:8px 10px;display:inline-block}
+.links a.on,.links a:hover{color:#ffd23f}
+.hero{max-width:1260px;margin:26px auto 0;padding:0 26px}
+.arena{position:relative;display:block;background:linear-gradient(#7ec850 0 58%,#5aa838 58% 62%,#d8c890 62% 100%);border:4px solid #101024;border-radius:10px;padding:24px}
+.hpbox{width:min(380px,46%)}
+.hpbox.hp-wild{position:absolute;top:40px;left:40px;z-index:2;margin-top:0}
+.hpbox.hp-team{position:absolute;top:320px;right:40px;z-index:2;margin-top:0}
+.opp .plate video{max-height:470px;object-fit:cover}
+@media (max-width:900px){.hpbox.hp-wild,.hpbox.hp-team{position:static;width:auto;margin:0 0 14px}}
+.plate{background:rgba(255,255,255,.14);border-radius:50%;padding:10px}
+.plate video{width:100%;display:block;border-radius:10px;border:3px solid #101024;background:#000}
+.hpbox{background:#f8f0d8;border:3px solid #1c1c2e;border-radius:8px;padding:10px 14px;margin-top:-14px;position:relative;box-shadow:4px 4px 0 rgba(0,0,0,.25)}
+.hpbox .nm{font-weight:700;font-size:16px;letter-spacing:1px;display:flex;justify-content:space-between}
+.hptrack{height:10px;background:#585868;border:2px solid #1c1c2e;border-radius:6px;margin-top:6px;overflow:hidden}
+.hpfill{height:100%;background:linear-gradient(90deg,#38c858,#9ae860)}
+.dlg{margin-top:18px;background:#f8f0d8;border:4px solid #1c1c2e;border-radius:10px;padding:22px 26px;box-shadow:6px 6px 0 rgba(0,0,0,.25)}
+.kicker{font-family:"Press Start 2P";font-size:11px;color:#8a6408;letter-spacing:1px}
+.dlg h1{font-family:"Press Start 2P";font-size:clamp(20px,3.4vw,34px);line-height:1.35;margin:12px 0}
+.dlg .sub{font-size:19px;max-width:62ch}
+.cmds{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:18px}
+.cmd{background:#fff;border:3px solid #1c1c2e;border-radius:8px;padding:14px 18px;font-family:"Press Start 2P";font-size:12px;color:#1c1c2e;text-decoration:none;text-align:left;box-shadow:3px 3px 0 rgba(0,0,0,.2);min-height:48px;display:flex;align-items:center;gap:10px}
+.cmd svg{width:16px;height:16px;flex:none}
+.cmd:hover{background:#ffd23f}
+.cmd.primary{background:#d03a2e;color:#fff;border-color:#8c1f18}
+.cmd.primary:hover{background:#e0503f}
+.sechead{max-width:1260px;margin:30px auto 0;padding:0 26px}
+.sechead .in{border-left:6px solid #ffd23f;padding:2px 0 2px 14px;display:flex;align-items:center;gap:12px}
+.sechead .in svg{width:26px;height:26px;color:#ffd23f;flex:none}
+.sechead .k{font-family:"Press Start 2P";font-size:11px;color:#ffd23f;letter-spacing:1px}
+.sechead .t{color:#f8f0d8;font-weight:700;font-size:22px;margin-top:6px}
+.stats{max-width:1260px;margin:16px auto 0;padding:0 26px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.stat{background:#f8f0d8;border:3px solid #1c1c2e;border-radius:8px;padding:14px 16px;box-shadow:4px 4px 0 rgba(0,0,0,.2)}
+.stat svg{width:26px;height:26px;color:#1c1c2e;display:block;margin-bottom:6px}
+.stat b{font-family:"Press Start 2P";font-size:22px;display:block;color:#b82848}
+.stat span{font-weight:600;font-size:15px}
+.party{max-width:1260px;margin:16px auto 0;padding:0 26px}
+.party .in{background:#f8f0d8;border:3px solid #1c1c2e;border-radius:8px;padding:14px 18px;box-shadow:4px 4px 0 rgba(0,0,0,.2);display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.party .lbl{font-family:"Press Start 2P";font-size:11px;color:#1c1c2e}
+.party .balls{display:flex;gap:10px}
+.pb{width:34px;height:34px;border-radius:50%;border:3px solid #1c1c2e;background:linear-gradient(#e04038 0 46%,#1c1c2e 46% 54%,#f8f8f8 54% 100%);position:relative;flex:none}
+.pb::after{content:"";position:absolute;left:50%;top:50%;width:10px;height:10px;margin:-6px 0 0 -6px;background:#f8f8f8;border:3px solid #1c1c2e;border-radius:50%}
+.party .cap{font-size:16px;color:#4a4a5e}
+.moves{max-width:1260px;margin:16px auto 0;padding:0 26px;display:flex;flex-direction:column;gap:14px}
+.move{background:#f8f0d8;border:4px solid #1c1c2e;border-radius:10px;padding:18px 22px;box-shadow:5px 5px 0 rgba(0,0,0,.22);display:flex;gap:24px;align-items:center}
+.move .pp{font-family:"Press Start 2P";font-size:10px;color:#1e5bbf;display:block;flex:0 0 150px;line-height:1.7}
+.move .txt{flex:1}
+.move h2{font-family:"Press Start 2P";font-size:17px;margin:0 0 8px}
+.move p{font-size:17px}
+.thumb{width:230px;height:150px;object-fit:cover;border:3px solid #1c1c2e;border-radius:8px;box-shadow:4px 4px 0 rgba(0,0,0,.25);flex:none;background:#000}
+.band{max-width:1260px;margin:16px auto 0;padding:0 26px}
+.bandin{background:#f8f0d8;border:4px solid #1c1c2e;border-radius:10px;padding:20px 22px;box-shadow:6px 6px 0 rgba(0,0,0,.25)}
+.bandin .bt{font-family:"Press Start 2P";font-size:14px;margin-bottom:6px;display:flex;align-items:center;gap:10px}
+.bandin .bt svg{width:20px;height:20px;color:#b02820}
+.bandin .bs{font-size:16px;color:#4a4a5e;margin-bottom:12px}
+.bandin video{width:100%;display:block;border:3px solid #1c1c2e;border-radius:8px;background:#000}
+@media (max-width:900px){.move{flex-wrap:wrap}.move .pp{flex:none}.move .txt{flex:1 1 100%;order:3}.thumb{width:100%;height:170px;flex:1 1 100%;order:4}}
+.cta{max-width:1260px;margin:30px auto;padding:0 26px}
+.ctabox{background:#f8f0d8;border:4px solid #1c1c2e;border-radius:10px;padding:24px 26px;box-shadow:6px 6px 0 rgba(0,0,0,.25);display:flex;gap:24px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+.ctabox h2{font-family:"Press Start 2P";font-size:18px;margin-bottom:10px}
+.steps{font-size:17px}.fine{font-size:14px;color:#5a5a6e;margin-top:8px}
+footer{max-width:1260px;margin:0 auto;padding:22px 26px 30px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:#8f9fd4;font-size:15px}
+footer a{color:#8f9fd4}
+.phead{max-width:1260px;margin:26px auto 0;padding:22px 26px;background:#f8f0d8;border:4px solid #1c1c2e;border-radius:10px;box-shadow:5px 5px 0 rgba(0,0,0,.22)}
+.phead .kicker{display:block;margin-bottom:10px}
+.phead h1{font-family:"Press Start 2P";font-size:clamp(18px,3vw,26px)}
+.phead p{margin-top:10px;font-size:18px}
+.panelwrap{max-width:1260px;margin:16px auto;padding:0 26px}
+.leadin{font-size:18px;background:#f8f0d8;border:3px solid #1c1c2e;border-radius:8px;padding:14px 18px;margin-bottom:18px;box-shadow:4px 4px 0 rgba(0,0,0,.2)}
+.logrow{background:#f8f0d8;border:4px solid #1c1c2e;border-radius:10px;padding:16px 20px;box-shadow:5px 5px 0 rgba(0,0,0,.22);display:flex;gap:20px;align-items:center;margin-bottom:14px}
+.logrow .tag{flex:0 0 140px}
+.logrow .num{font-family:"Press Start 2P";font-size:11px;color:#1c1c2e;display:block}
+.logrow .cat{font-family:"Press Start 2P";font-size:9px;letter-spacing:1px;display:inline-block;margin-top:8px;padding:5px 8px;border:2px solid #1c1c2e;border-radius:5px;color:#fff}
+.cat.c-grass{background:#2e7d32}.cat.c-fire{background:#d03a2e}.cat.c-water{background:#1e5bbf}.cat.c-gold{background:#8a6408}
+.logrow .txt{flex:1}
+.logrow h2{font-size:20px;margin:0 0 6px}
+.logrow p{font-size:16px}
+.logrow .thumb{width:210px;height:130px}
+.ftile{width:64px;height:64px;background:#101024;border:3px solid #1c1c2e;border-radius:8px;box-shadow:4px 4px 0 rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;color:#ffd23f;flex:none}
+.ftile svg{width:36px;height:36px}
+@media (max-width:900px){.logrow{flex-wrap:wrap}.logrow .tag{flex:none;display:flex;gap:10px;align-items:center}.logrow .cat{margin-top:0}.logrow .txt{flex:1 1 100%}.logrow .thumb{width:100%;height:170px}}
+.stepgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.step{background:#f8f0d8;border:4px solid #1c1c2e;border-radius:10px;padding:16px 18px;box-shadow:5px 5px 0 rgba(0,0,0,.22)}
+.step .thead{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.step .sic{width:40px;height:40px;background:#101024;border:3px solid #1c1c2e;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#ffd23f;flex:none}
+.step .sic svg{width:22px;height:22px}
+.step b{font-family:"Press Start 2P";font-size:13px;display:block;color:#1c1c2e}
+.step p{font-size:16px;margin-bottom:10px}
+.step .btn{display:inline-block;background:#1e5bbf;color:#fff;border:3px solid #1c1c2e;border-radius:6px;padding:12px 16px;text-decoration:none;font-weight:600;font-size:14px;margin:4px 6px 0 0;min-height:44px}
+.step .ph{display:inline-block;background:#e8ddb8;border:2px dashed #8c8464;border-radius:6px;padding:12px 16px;font-weight:600;font-size:14px;color:#57503c;margin-top:4px}
+.step .ph em{font-style:italic;font-weight:400}
+.fine2{font-size:14px;color:#8f9fd4;margin:14px 0}
+.ctrl{display:grid;grid-template-columns:1fr 1.2fr;gap:18px;margin-top:18px;background:#f8f0d8;border:4px solid #1c1c2e;border-radius:10px;padding:20px;box-shadow:5px 5px 0 rgba(0,0,0,.22)}
+.ctrl .sec{font-family:"Press Start 2P";font-size:15px;margin-bottom:10px}
+.ctrl .lead{font-size:16px;color:#4a4a5e}
+.ctrl figure{margin:14px 0 0}
+.ctrl figure img{width:100%;max-height:220px;object-fit:cover;border:3px solid #1c1c2e;border-radius:8px;display:block;background:#000}
+.ctrl figcaption{font-size:14px;color:#57503c;margin-top:6px}
+.keys{list-style:none;padding:0;display:flex;flex-direction:column;gap:8px}
+.keys li{display:flex;align-items:center;gap:12px;font-size:16px}
+.key{font-family:"Press Start 2P";font-size:10px;background:#1c1c2e;color:#ffd23f;border-radius:6px;padding:7px 10px;min-width:96px;text-align:center;flex:none}
+.updrow{background:#f8f0d8;border:4px solid #1c1c2e;border-radius:10px;padding:18px 22px;box-shadow:5px 5px 0 rgba(0,0,0,.22);display:flex;gap:22px;align-items:center;margin-bottom:14px}
+.updrow .d{font-family:"Press Start 2P";font-size:10px;color:#1e5bbf;flex:0 0 160px;line-height:1.8}
+.updrow .d::before{content:"\25B6\00a0";color:#b02820}
+.updrow .txt{flex:1}
+.updrow b{display:block;font-size:20px;margin:0 0 6px}
+.updrow p{font-size:16px}
+.updrow .thumb{width:230px;height:140px}
+@media (max-width:900px){.updrow{flex-wrap:wrap}.updrow .d{flex:none}.updrow .txt{flex:1 1 100%}.updrow .thumb{width:100%;height:170px}}
+.logend{max-width:1260px;margin:6px auto 0;padding:0 26px;text-align:center}
+.logend span{font-family:"Press Start 2P";font-size:10px;color:#8f9fd4;letter-spacing:2px}
+.supwrap{max-width:1260px;margin:16px auto;padding:0 26px}
+.supbox{background:#f8f0d8;border:4px solid #1c1c2e;border-radius:10px;padding:22px 24px;box-shadow:6px 6px 0 rgba(0,0,0,.25)}
+.npc{font-size:17px;padding:10px 0 10px 40px;position:relative}
+.npc .nic{position:absolute;left:0;top:8px;width:28px;height:28px;background:#101024;border:2px solid #1c1c2e;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#ffd23f}
+.npc .nic svg{width:16px;height:16px}
+.supgrid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:12px}
+.supgrid label{display:block;font-weight:700;font-size:15px;margin:14px 0 6px}
+.supgrid .opt{font-weight:400;color:#57503c;font-size:13px}
+.supgrid input,.supgrid textarea{width:100%;padding:10px;border:3px solid #1c1c2e;border-radius:6px;background:#fffdf4;font-family:inherit;font-size:16px}
+.supgrid input:disabled,.supgrid textarea:disabled{opacity:.65;background:#efe8d0}
+.supgrid .paste{border:3px dashed #8c8464;border-radius:6px;padding:14px;font-size:15px;color:#57503c;background:#fffdf4}
+form{margin:0}
+#request-form{margin-top:12px}
+.count{font-size:14px;color:#57503c;margin-top:6px}
+.hp-honey{position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden}
+.shot-grid{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.shot-card{position:relative}
+.shot-card img{width:96px;height:96px;object-fit:cover;border:3px solid #1c1c2e;border-radius:6px;display:block}
+.shot-card button{position:absolute;top:-8px;right:-8px;background:#d03a2e;color:#fff;border:2px solid #1c1c2e;border-radius:6px;font-size:11px;padding:2px 6px}
+.status{font-weight:600}
+.supgrid button{margin-top:14px;cursor:pointer}background:#1e5bbf;color:#fff;border:3px solid #1c1c2e;border-radius:6px;padding:14px 22px;font-family:"Press Start 2P";font-size:12px;min-height:48px}
+.supgrid button:disabled{opacity:.55;background:#8f9fd4}
+@media (max-width:900px){.stepgrid,.supgrid,.ctrl{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.cmds{grid-template-columns:1fr}}
 
-<section class="feat flip"><div class="wrap"><span class="num">02</span>
-<div class="grid"><div class="txt"><span class="tag">Battle</span>
-<h2>Battles that keep you moving</h2>
-<p>Lock on, dodge attacks, choose moves, and throw a Poké Ball. Gym Leaders put your team to the test.</p>
-</div><div class="frame"><span class="tick a"></span><span class="tick b"></span><span class="tick c"></span><span class="tick d"></span>
-<video controls preload="none" playsinline poster="assets/battle-poster.jpg" src="assets/clips/battle.mp4"></video><span class="cap">Gameplay demonstration</span></div>
-</div></div></section>
-
-<section class="feat"><div class="wrap"><span class="num">03</span>
-<div class="grid"><div class="txt"><span class="tag">Train</span>
-<h2>Eight skills to train</h2>
-<p>Fishing, Foraging, Mining, Agility, Crafting, Woodcutting, Firemaking, and Cooking grow from level 1 to 99 just by doing them. Gather with F, cast a line with H, and climb or jump to train Agility.</p>
-</div><div class="frame"><span class="tick a"></span><span class="tick b"></span><span class="tick c"></span><span class="tick d"></span>
-<img src="assets/skills.jpg" alt="The skills panel in the game"><span class="cap">Actual gameplay</span></div>
-</div></div></section>
-
-<section class="feat wide"><div class="wrap"><span class="num">04</span>
-<div class="txt"><span class="tag">Fish</span>
-<h2>Fish the waters</h2>
-<p>Cast at the sea, lakes, ponds, and rivers. Wait for the float to dip, strike, and reel. A hooked water Pokémon starts a battle.</p>
-</div></div></section>
-
-<section class="feat"><div class="wrap"><span class="num">05</span>
-<div class="grid"><div class="txt"><span class="tag">Cook</span>
-<h2>Cook over a campfire</h2>
-<p>Harvest grain, carrots, potatoes, and cabbage. Grind grain at the mill, light some logs, and cook Vegetable Soup, Garden Bread, Berry Pie, or Vegetable Stew. Meals restore your Pokémon's HP.</p>
-</div><div class="frame"><span class="tick a"></span><span class="tick b"></span><span class="tick c"></span><span class="tick d"></span>
-<img src="assets/cooking.jpg" alt="Cooking at a campfire"><span class="cap">Actual gameplay</span></div>
-</div></div></section>
-
-<section class="feat flip"><div class="wrap"><span class="num">06</span>
-<div class="grid"><div class="txt"><span class="tag">Traverse</span>
-<h2>Ride, fly, and surf</h2>
-<p>Press B to climb onto a Pokémon that can carry you. Rapidash is the fastest thing on legs, Rhyhorn plows through brush and fences, and Onix and Steelix carry you on their heads. Flying Pokémon take you across the map, and Water Pokémon carry you over the swell.</p>
-</div><div class="frame"><span class="tick a"></span><span class="tick b"></span><span class="tick c"></span><span class="tick d"></span>
-<img src="assets/map.jpg" alt="The world map"><span class="cap">Actual gameplay</span></div>
-</div></div></section>
-
-<section class="feat wide"><div class="wrap"><span class="num">07</span>
-<div class="txt"><span class="tag">Team</span>
-<h2>Make the team your own</h2>
-<p>Keep six Pokémon in your party, choose your lead, and manage the rest from the PC in a Pokémon Center. Set held items, share experience with the Exp Share, and keep your lead walking beside you.</p>
-</div></div></section>
-
-<section class="feat wide"><div class="wrap"><span class="num">08</span>
-<div class="txt"><span class="tag">Collect</span>
-<h2>Fill the Pokédex, earn badges</h2>
-<p>Track every species seen and caught, with a 3D model thumbnail for each. Sixteen badges wait across Kanto and Johto.</p>
-</div></div></section>
-
-<section class="feat"><div class="wrap"><span class="num">09</span>
-<div class="grid"><div class="txt"><span class="tag">Quest</span>
-<h2>Quests beyond battle</h2>
-<p>The Quest Journal leads through errands and mysteries like Barnaby's Parcel, The One That Got Away, and Medicine for the Lighthouse, plus treasure trails, bounty boards, and area diaries.</p>
-</div><div class="frame"><span class="tick a"></span><span class="tick b"></span><span class="tick c"></span><span class="tick d"></span>
-<img src="assets/quests.jpg" alt="The quest journal"><span class="cap">Actual gameplay</span></div>
-</div></div></section>
-
-<section class="feat wide"><div class="wrap"><span class="num">10</span>
-<div class="txt"><span class="tag">Wander</span>
-<h2>More than the next battle</h2>
-<p>Explore, fish at the water, and discover the people and places along the way.</p>
-</div></div></section>
-
-<section class="feat wide"><div class="wrap"><span class="num">11</span>
-<div class="txt"><span class="tag">Together</span>
-<h2>Better with friends</h2>
-<p>Meet other trainers in the shared world. Trade directly or try Wonder Trade. Your account keeps your saved progress.</p>
-</div></div></section>
-<footer><span>PokeWorld — a world to explore together.</span><span>A question, an idea, a bug? Tell us.</span></footer></body></html>
+</style></head><body>
+<nav><span class="wordmark">POKE<b>WORLD</b></span><span class="links"><a href="index.html">Home</a><a href="how-to-play.html">How to play</a><a class="on" href="features.html">Features</a><a href="updates.html">Updates</a><a href="support.html">Support</a></span></nav><div class="phead"><span class="kicker">FIELD GUIDE</span><h1>Features</h1><p>Go where curiosity leads. Build a team, find your favorite place, and share the journey.</p></div><div class="panelwrap"><div class="logrow"><div class="tag"><span class="num">01</span><span class="cat c-grass">WORLD</span></div><div class="txt"><h2>A world in three dimensions</h2><p>Walk through towns and forests with your lead Pok&eacute;mon beside you. Open the map when it&rsquo;s time to head somewhere new, and fly back to any town you have visited. Two regions, Kanto and Johto, hold towns, forests, and interiors to step inside.</p></div><img class="thumb" src="https://ddhkim-gop.github.io/pokeworld-site/assets/world.jpg" alt="A trainer and Pikachu walking a stone path through a village" loading="lazy"></div><div class="logrow"><div class="tag"><span class="num">02</span><span class="cat c-fire">BATTLE</span></div><div class="txt"><h2>Battles that keep you moving</h2><p>Lock on, dodge attacks, choose moves, and throw a Pok&eacute; Ball. Gym Leaders put your team to the test.</p></div><img class="thumb" src="https://ddhkim-gop.github.io/pokeworld-site/assets/battle-poster.jpg" alt="A battle between Pidgey and Pikachu in the rain" loading="lazy"></div><div class="logrow"><div class="tag"><span class="num">03</span><span class="cat c-water">TRAIN</span></div><div class="txt"><h2>Eight skills to train</h2><p>Fishing, Foraging, Mining, Agility, Crafting, Woodcutting, Firemaking, and Cooking grow from level 1 to 99 just by doing them. Gather with F, cast a line with H, and climb or jump to train Agility.</p></div><img class="thumb" src="https://ddhkim-gop.github.io/pokeworld-site/assets/skills.jpg" alt="The skills panel in the game" loading="lazy"></div><div class="logrow"><div class="tag"><span class="num">04</span><span class="cat c-water">FISH</span></div><div class="txt"><h2>Fish the waters</h2><p>Cast at the sea, lakes, ponds, and rivers. Wait for the float to dip, strike, and reel. A hooked water Pok&eacute;mon starts a battle.</p></div><span class="ftile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12c3-4.5 7-6 11-6 3 0 5 2.5 7 6-2 3.5-4 6-7 6-4 0-8-1.5-11-6z"/><path d="M3 12l3-3M3 12l3 3"/><circle cx="16.5" cy="11" r="1" fill="currentColor" stroke="none"/></svg></span></div><div class="logrow"><div class="tag"><span class="num">05</span><span class="cat c-fire">COOK</span></div><div class="txt"><h2>Cook over a campfire</h2><p>Harvest grain, carrots, potatoes, and cabbage. Grind grain at the mill, light some logs, and cook Vegetable Soup, Garden Bread, Berry Pie, or Vegetable Stew. Meals restore your Pok&eacute;mon&rsquo;s HP.</p></div><img class="thumb" src="https://ddhkim-gop.github.io/pokeworld-site/assets/cooking.jpg" alt="The cooking menu in the game" loading="lazy"></div><div class="logrow"><div class="tag"><span class="num">06</span><span class="cat c-grass">TRAVERSE</span></div><div class="txt"><h2>Ride, fly, and surf</h2><p>Press B to climb onto a Pok&eacute;mon that can carry you. Rapidash is the fastest thing on legs, Rhyhorn plows through brush and fences, and Onix and Steelix carry you on their heads. Flying Pok&eacute;mon take you across the map, and Water Pok&eacute;mon carry you over the swell.</p></div><img class="thumb" src="https://ddhkim-gop.github.io/pokeworld-site/assets/map.jpg" alt="The world map in the game" loading="lazy"></div><div class="logrow"><div class="tag"><span class="num">07</span><span class="cat c-gold">TEAM</span></div><div class="txt"><h2>Make the team your own</h2><p>Keep six Pok&eacute;mon in your party, choose your lead, and manage the rest from the PC in a Pok&eacute;mon Center. Set held items, share experience with the Exp Share, and keep your lead walking beside you.</p></div><span class="ftile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><circle cx="12" cy="12" r="3"/></svg></span></div><div class="logrow"><div class="tag"><span class="num">08</span><span class="cat c-gold">COLLECT</span></div><div class="txt"><h2>Fill the Pok&eacute;dex, earn badges</h2><p>Track every species seen and caught, with a 3D model thumbnail for each. Sixteen badges wait across Kanto and Johto.</p></div><span class="ftile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.5" fill="currentColor" stroke="none"/></svg></span></div><div class="logrow"><div class="tag"><span class="num">09</span><span class="cat c-water">QUEST</span></div><div class="txt"><h2>Quests beyond battle</h2><p>The Quest Journal leads through errands and mysteries like Barnaby&rsquo;s Parcel, The One That Got Away, and Medicine for the Lighthouse, plus treasure trails, bounty boards, and area diaries.</p></div><img class="thumb" src="https://ddhkim-gop.github.io/pokeworld-site/assets/quests.jpg" alt="The quest journal in the game" loading="lazy"></div><div class="logrow"><div class="tag"><span class="num">10</span><span class="cat c-grass">WANDER</span></div><div class="txt"><h2>More than the next battle</h2><p>Explore, fish at the water, and discover the people and places along the way.</p></div><span class="ftile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z" fill="currentColor" stroke="none"/></svg></span></div><div class="logrow"><div class="tag"><span class="num">11</span><span class="cat c-fire">TOGETHER</span></div><div class="txt"><h2>Better with friends</h2><p>Meet other trainers in the shared world. Trade directly or try Wonder Trade. Your account keeps your saved progress.</p></div><span class="ftile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="3"/><path d="M3.5 20c.5-3.5 2.2-5 4.5-5s4 1.5 4.5 5"/><circle cx="16.5" cy="9" r="2.5"/><path d="M13.5 20c.4-2.8 1.7-4.2 3.6-4.2 1.6 0 2.8 1.1 3.2 3.4"/></svg></span></div></div><footer><span>PokeWorld &mdash; a world to explore together.</span><span>A question, an idea, a bug? <a href="support.html">Tell us.</a></span></footer><script src="config.js"></script><script src="site.js"></script></body></html>
